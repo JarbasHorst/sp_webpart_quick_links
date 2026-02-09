@@ -3,7 +3,7 @@
     "useGulp": false,
     "plusBeta": false,
     "isCreatingSolution": true,
-    "nodeVersion": "24.13.0",
+    "nodeVersion": "22.14.0",
     "sdksVersions": {},
     "version": "1.22.2",
     "libraryName": "quick-links-webpart",

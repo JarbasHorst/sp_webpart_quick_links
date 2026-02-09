@@ -71,10 +71,10 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
   };
 
   private handleEditLink = (index: number): void => {
-    this.setState({
+    this.setState((prevState) => ({
       editingIndex: index,
-      newLink: { ...this.state.links[index] }
-    });
+      newLink: { ...prevState.links[index] }
+    }));
   };
 
   private handleCancelEdit = (): void => {

@@ -22,7 +22,8 @@
     "description": { "default": "QuickLinks description" },
     "officeFabricIconFontName": "Page",
     "properties": {
-      "description": "QuickLinks"
+      "title": "Quick Links",
+      "links": []
     }
   }]
 }

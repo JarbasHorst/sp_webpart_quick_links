@@ -59,7 +59,6 @@ A modern SharePoint Framework (SPFx) web part that allows users to create and di
   - `npm install`
   - `npm run start` (for local testing)
   - `npm run build` (for production build)
-  - `gulp package-solution --ship` (to create deployment package)
 
 ## Usage
 

@@ -55,14 +55,14 @@ export default class QuickLinksWebPart extends BaseClientSideWebPart<IQuickLinks
     } = currentTheme;
 
     if (semanticColors) {
-      this.domElement.style.setProperty('--bodyText', semanticColors.bodyText || null);
-      this.domElement.style.setProperty('--link', semanticColors.link || null);
-      this.domElement.style.setProperty('--linkHovered', semanticColors.linkHovered || null);
-      this.domElement.style.setProperty('--white', semanticColors.bodyBackground || null);
-      this.domElement.style.setProperty('--neutralLight', semanticColors.bodyFrameDivider || null);
-      this.domElement.style.setProperty('--themePrimary', semanticColors.link || null);
-      this.domElement.style.setProperty('--neutralSecondary', semanticColors.bodySubtext || null);
-      this.domElement.style.setProperty('--neutralTertiary', semanticColors.disabledBodyText || null);
+      this.domElement.style.setProperty('--bodyText', semanticColors.bodyText || '');
+      this.domElement.style.setProperty('--link', semanticColors.link || '');
+      this.domElement.style.setProperty('--linkHovered', semanticColors.linkHovered || '');
+      this.domElement.style.setProperty('--white', semanticColors.bodyBackground || '');
+      this.domElement.style.setProperty('--neutralLight', semanticColors.bodyFrameDivider || '');
+      this.domElement.style.setProperty('--themePrimary', semanticColors.link || '');
+      this.domElement.style.setProperty('--neutralSecondary', semanticColors.bodySubtext || '');
+      this.domElement.style.setProperty('--neutralTertiary', semanticColors.disabledBodyText || '');
     }
 
   }

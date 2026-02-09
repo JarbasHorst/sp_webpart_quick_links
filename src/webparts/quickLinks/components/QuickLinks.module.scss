@@ -2,16 +2,14 @@
 
 .quickLinks {
   padding: 20px;
-  color: "[theme:bodyText, default: #323130]";
-  color: var(--bodyText);
+  color: var(--bodyText, "[theme:bodyText, default: #323130]");
 }
 
 .title {
   margin: 0 0 20px 0;
   font-size: 24px;
   font-weight: 600;
-  color: "[theme:bodyText, default: #323130]";
-  color: var(--bodyText);
+  color: var(--bodyText, "[theme:bodyText, default: #323130]");
 }
 
 .linksContainer {
@@ -27,10 +25,8 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background-color: "[theme:white, default: #ffffff]";
-  background-color: var(--white);
-  border: 1px solid "[theme:neutralLight, default: #edebe9]";
-  border: 1px solid var(--neutralLight);
+  background-color: var(--white, "[theme:white, default: #ffffff]");
+  border: 1px solid var(--neutralLight, "[theme:neutralLight, default: #edebe9]");
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.2s ease-in-out;
@@ -41,12 +37,10 @@
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108);
-    border-color: "[theme:themePrimary, default: #0078d4]";
-    border-color: var(--themePrimary);
+    border-color: var(--themePrimary, "[theme:themePrimary, default: #0078d4]");
     
     .icon {
-      color: "[theme:themePrimary, default: #0078d4]";
-      color: var(--themePrimary);
+      color: var(--themePrimary, "[theme:themePrimary, default: #0078d4]");
       transform: scale(1.1);
     }
   }
@@ -62,8 +56,7 @@
 
 .icon {
   font-size: 48px;
-  color: "[theme:themePrimary, default: #0078d4]";
-  color: var(--themePrimary);
+  color: var(--themePrimary, "[theme:themePrimary, default: #0078d4]");
   transition: all 0.2s ease-in-out;
 }
 
@@ -75,8 +68,7 @@
 .linkTitle {
   font-size: 16px;
   font-weight: 600;
-  color: "[theme:bodyText, default: #323130]";
-  color: var(--bodyText);
+  color: var(--bodyText, "[theme:bodyText, default: #323130]");
   word-break: break-word;
 }
 
@@ -88,13 +80,11 @@
   justify-content: center;
   padding: 40px;
   text-align: center;
-  color: "[theme:neutralSecondary, default: #605e5c]";
-  color: var(--neutralSecondary);
+  color: var(--neutralSecondary, "[theme:neutralSecondary, default: #605e5c]");
 }
 
 .emptyIcon {
   font-size: 64px;
   margin-bottom: 16px;
-  color: "[theme:neutralTertiary, default: #a19f9d]";
-  color: var(--neutralTertiary);
+  color: var(--neutralTertiary, "[theme:neutralTertiary, default: #a19f9d]");
 }
