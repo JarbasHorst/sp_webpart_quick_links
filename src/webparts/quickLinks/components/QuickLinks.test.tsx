@@ -257,4 +257,75 @@ describe('QuickLinks Component', () => {
     // First link has 'Document' icon
     expect(container.querySelector('i[data-icon-name="Document"]')).toBeInTheDocument();
   });
+
+  it('should render custom image icon when iconType is custom', () => {
+    const customIconLinks: IQuickLinkItem[] = [
+      {
+        title: 'Custom Link',
+        url: 'https://example.com',
+        icon: 'https://example.com/logo.png',
+        iconType: 'custom',
+        openInNewTab: true
+      }
+    ];
+    const props = { ...defaultProps, links: customIconLinks };
+    const { container } = render(<QuickLinks {...props} />);
+    
+    const img = container.querySelector('img');
+    expect(img).toBeInTheDocument();
+    expect(img).toHaveAttribute('src', 'https://example.com/logo.png');
+    expect(img).toHaveAttribute('alt', 'Custom Link');
+  });
+
+  it('should use fluent icon when iconType is not specified', () => {
+    const fluentIconLinks: IQuickLinkItem[] = [
+      {
+        title: 'Fluent Link',
+        url: 'https://example.com',
+        icon: 'Home',
+        openInNewTab: true
+      }
+    ];
+    const props = { ...defaultProps, links: fluentIconLinks };
+    const { container } = render(<QuickLinks {...props} />);
+    
+    expect(container.querySelector('i[data-icon-name="Home"]')).toBeInTheDocument();
+  });
+
+  it('should reject custom icon URLs with javascript: protocol', () => {
+    const xssIconLinks: IQuickLinkItem[] = [
+      {
+        title: 'XSS Icon',
+        url: 'https://example.com',
+        // eslint-disable-next-line no-script-url
+        icon: 'javascript:alert("XSS")',
+        iconType: 'custom',
+        openInNewTab: true
+      }
+    ];
+    const props = { ...defaultProps, links: xssIconLinks };
+    const { container } = render(<QuickLinks {...props} />);
+    
+    // Should fallback to default Fluent icon
+    expect(container.querySelector('i[data-icon-name="Link"]')).toBeInTheDocument();
+    expect(container.querySelector('img')).not.toBeInTheDocument();
+  });
+
+  it('should reject custom icon URLs with data: protocol', () => {
+    const dataIconLinks: IQuickLinkItem[] = [
+      {
+        title: 'Data Icon',
+        url: 'https://example.com',
+        icon: 'data:image/svg+xml,<svg></svg>',
+        iconType: 'custom',
+        openInNewTab: true
+      }
+    ];
+    const props = { ...defaultProps, links: dataIconLinks };
+    const { container } = render(<QuickLinks {...props} />);
+    
+    // Should fallback to default Fluent icon
+    expect(container.querySelector('i[data-icon-name="Link"]')).toBeInTheDocument();
+    expect(container.querySelector('img')).not.toBeInTheDocument();
+  });
 });

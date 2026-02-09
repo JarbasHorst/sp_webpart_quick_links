@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styles from './QuickLinks.module.scss';
 import type { IQuickLinksProps } from './IQuickLinksProps';
+import type { IQuickLinkItem } from './IQuickLinkItem';
 import { Icon } from '@fluentui/react/lib/Icon';
 
 export default class QuickLinks extends React.Component<IQuickLinksProps> {
@@ -28,6 +29,39 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
            trimmedUrl.startsWith('?');
   }
 
+  private renderIcon(link: IQuickLinkItem): JSX.Element {
+    const iconType = link.iconType || 'fluent';
+    
+    if (iconType === 'custom' && link.icon) {
+      // Validate custom icon URL to prevent XSS
+      const isValidIconUrl = this.isValidUrl(link.icon);
+      if (isValidIconUrl) {
+        return (
+          <img 
+            src={link.icon} 
+            alt={link.title} 
+            className={styles.customIcon}
+            onError={(e) => {
+              // Fallback to default icon if image fails to load
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              const fallbackIcon = target.nextSibling as HTMLElement;
+              if (fallbackIcon) {
+                fallbackIcon.style.display = 'inline-block';
+              }
+            }}
+          />
+        );
+      } else {
+        // Invalid custom icon URL, fallback to default Link icon
+        return <Icon iconName="Link" className={styles.icon} />;
+      }
+    }
+    
+    // Default to Fluent UI icon
+    return <Icon iconName={link.icon || 'Link'} className={styles.icon} />;
+  }
+
   public render(): React.ReactElement<IQuickLinksProps> {
     const { title, links } = this.props;
 
@@ -50,7 +84,7 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
                   {...(!isValid && { onClick: (e) => { e.preventDefault(); } })}
                 >
                   <div className={styles.iconContainer}>
-                    <Icon iconName={link.icon || 'Link'} className={styles.icon} />
+                    {this.renderIcon(link)}
                   </div>
                   <div className={styles.linkText}>
                     <span className={styles.linkTitle}>{link.title}</span>
