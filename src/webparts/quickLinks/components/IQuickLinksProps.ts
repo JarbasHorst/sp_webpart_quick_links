@@ -1,7 +1,7 @@
+import { IQuickLinkItem } from './IQuickLinkItem';
+
 export interface IQuickLinksProps {
-  description: string;
+  title: string;
+  links: IQuickLinkItem[];
   isDarkTheme: boolean;
-  environmentMessage: string;
-  hasTeamsContext: boolean;
-  userDisplayName: string;
 }
