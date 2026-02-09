@@ -1,0 +1,19 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "useGulp": false,
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "22.14.0",
+    "sdksVersions": {},
+    "version": "1.22.2",
+    "libraryName": "quick-links-webpart",
+    "libraryId": "ed8208a5-7d2f-443b-8a88-5f1e9221de30",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "quick-links-webpart",
+    "solutionShortDescription": "quick-links-webpart description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}
