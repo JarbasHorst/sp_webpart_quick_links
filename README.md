@@ -1,10 +1,21 @@
-# quick-links-webpart
+# Quick Links Web Part
 
 ## Summary
 
-Short summary on functionality and used technologies.
+A modern SharePoint Framework (SPFx) web part that allows users to create and display quick links with custom icons, URLs, and target options. This web part features a card-based design with hover effects and supports both light and dark themes.
 
-[picture of the solution in action, if possible]
+![Quick Links Web Part Demo](https://github.com/user-attachments/assets/c9599f51-fc49-4a04-867a-4e58feb5c7ae)
+
+## Features
+
+- ✨ Modern, card-based UI design with smooth hover effects
+- 🔗 Add multiple quick links with custom titles and URLs
+- 🎨 Choose from Fluent UI icons for each link
+- 🎯 Configure links to open in the same tab or a new tab
+- 📝 Customizable web part title
+- 🌗 Theme-aware styling (supports light and dark themes)
+- 📱 Responsive grid layout that adapts to different screen sizes
+- ⚙️ Easy-to-use property pane for managing links
 
 ## Used SharePoint Framework Version
 
@@ -19,20 +30,20 @@ Short summary on functionality and used technologies.
 
 ## Prerequisites
 
-> Any special pre-requisites?
+- Node.js v22.14.0 or higher (recommended)
+- SharePoint Online environment
 
 ## Solution
 
 | Solution    | Author(s)                                               |
 | ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
+| quick-links-webpart | GitHub Copilot |
 
 ## Version history
 
 | Version | Date             | Comments        |
 | ------- | ---------------- | --------------- |
-| 1.1     | March 10, 2021   | Update comment  |
-| 1.0     | January 29, 2021 | Initial release |
+| 1.0     | February 9, 2026 | Initial release with full quick links functionality |
 
 ## Disclaimer
 
@@ -44,28 +55,81 @@ Short summary on functionality and used technologies.
 
 - Clone this repository
 - Ensure that you are at the solution folder
-- in the command-line run:
-  - `npm install -g @rushstack/heft`
+- In the command-line run:
   - `npm install`
-  - `heft start`
+  - `npm run start` (for local testing)
+  - `npm run build` (for production build)
+  - `gulp package-solution --ship` (to create deployment package)
 
-> Include any additional steps as needed.
+## Usage
 
-Other build commands can be listed using `heft --help`.
+### Adding the Web Part to a Page
+
+1. Edit a SharePoint page
+2. Click the "+" icon to add a web part
+3. Search for "QuickLinks"
+4. Add the web part to your page
+
+### Configuring Quick Links
+
+1. Click the **Edit** button (pencil icon) on the web part
+2. In the property pane on the right:
+   - **Web Part Title**: Enter a title for your quick links section (optional)
+   - **Quick Links**: Configure your links
+
+### Adding a Link
+
+In the Quick Links section of the property pane:
+
+1. **Link Title**: Enter the display name for your link
+2. **URL**: Enter the full URL (e.g., https://example.com)
+3. **Icon Name**: Enter a Fluent UI icon name (e.g., Home, Globe, Mail, Document)
+   - Popular icons: Home, Globe, Mail, People, Calendar, Document, Folder, Link, Settings, Info
+   - See [Fluent UI Icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons) for all available icons
+4. **Open in new tab**: Check this box if you want the link to open in a new browser tab
+5. Click **Add Link** to save
+
+### Managing Links
+
+- **Edit**: Click the Edit button next to any link to modify it
+- **Delete**: Click the Delete button to remove a link
+- Links are displayed in the order they were added
 
 ## Features
 
-Description of the extension that expands upon high-level summary above.
+This web part illustrates the following concepts:
 
-This extension illustrates the following concepts:
+- Building modern SPFx web parts with React and TypeScript
+- Creating custom property pane controls for rich configuration experiences
+- Using Fluent UI components and icons for consistent Microsoft 365 design
+- Implementing responsive grid layouts with CSS Grid
+- Theme-aware styling with CSS custom properties
+- Type-safe development with TypeScript interfaces
 
-- topic 1
-- topic 2
-- topic 3
+## Project Structure
 
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
+```
+src/webparts/quickLinks/
+├── components/
+│   ├── QuickLinks.tsx              # Main React component
+│   ├── QuickLinks.module.scss      # Component styles
+│   ├── IQuickLinksProps.ts         # Component props interface
+│   └── IQuickLinkItem.ts           # Link item interface
+├── propertyPane/
+│   ├── PropertyPaneQuickLinks.ts            # Custom property pane field
+│   ├── QuickLinksPropertyPanel.tsx          # Property panel React component
+│   └── QuickLinksPropertyPanel.module.scss  # Property panel styles
+├── QuickLinksWebPart.ts            # Web part class
+└── loc/                            # Localization resources
+```
 
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
+## Technologies Used
+
+- **SPFx 1.22.2**: Latest SharePoint Framework
+- **React 17**: UI library
+- **TypeScript 5.8**: Type-safe development
+- **Fluent UI 8**: Microsoft's design system
+- **SCSS**: Styling with Sass
 
 ## References
 
@@ -75,3 +139,4 @@ This extension illustrates the following concepts:
 - [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/sharepoint/dev/spfx/publish-to-marketplace-overview)
 - [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
 - [Heft Documentation](https://heft.rushstack.io/)
+- [Fluent UI Icons](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons)
