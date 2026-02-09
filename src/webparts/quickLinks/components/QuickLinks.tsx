@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './QuickLinks.module.scss';
 import type { IQuickLinksProps } from './IQuickLinksProps';
-import type { IQuickLinkItem } from './IQuickLinkItem';
 import { Icon } from '@fluentui/react/lib/Icon';
 
 export default class QuickLinks extends React.Component<IQuickLinksProps> {
@@ -10,19 +9,23 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
     // Allow only http, https, and relative URLs
     if (!url) return false;
     
-    const trimmedUrl = url.trim().toLowerCase();
+    const trimmedUrl = url.trim();
+    const lowerUrl = trimmedUrl.toLowerCase();
     
     // Reject javascript: and data: URLs
-    if (trimmedUrl.startsWith('javascript:') || trimmedUrl.startsWith('data:')) {
+    // eslint-disable-next-line no-script-url
+    if (lowerUrl.startsWith('javascript:') || lowerUrl.startsWith('data:')) {
       return false;
     }
     
-    // Allow http, https, and relative URLs
-    return trimmedUrl.startsWith('http://') || 
-           trimmedUrl.startsWith('https://') || 
+    // Allow http, https, relative URLs, and same-page fragments/queries
+    return lowerUrl.startsWith('http://') || 
+           lowerUrl.startsWith('https://') || 
            trimmedUrl.startsWith('/') ||
            trimmedUrl.startsWith('./') ||
-           trimmedUrl.startsWith('../');
+           trimmedUrl.startsWith('../') ||
+           trimmedUrl.startsWith('#') ||
+           trimmedUrl.startsWith('?');
   }
 
   public render(): React.ReactElement<IQuickLinksProps> {
@@ -44,7 +47,7 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
                   className={styles.linkCard}
                   target={link.openInNewTab ? '_blank' : '_self'}
                   rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                  onClick={!isValid ? (e) => { e.preventDefault(); } : undefined}
+                  {...(!isValid && { onClick: (e) => { e.preventDefault(); } })}
                 >
                   <div className={styles.iconContainer}>
                     <Icon iconName={link.icon || 'Link'} className={styles.icon} />
