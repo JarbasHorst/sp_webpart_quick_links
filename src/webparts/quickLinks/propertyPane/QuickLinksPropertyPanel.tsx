@@ -40,6 +40,10 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
     };
   }
 
+  private getDefaultIconValue(iconType: 'fluent' | 'custom' | undefined): string {
+    return iconType === 'custom' ? '' : 'Link';
+  }
+
   private handleAddLink = (): void => {
     const { newLink, links } = this.state;
     if (newLink.title && newLink.url) {
@@ -119,14 +123,14 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
               newLink: { 
                 ...newLink, 
                 iconType: option?.key as 'fluent' | 'custom',
-                icon: option?.key === 'custom' ? '' : 'Link'
+                icon: this.getDefaultIconValue(option?.key as 'fluent' | 'custom')
               } 
             })}
           />
           <TextField
             label={newLink.iconType === 'custom' ? 'Image URL' : 'Icon Name'}
             value={newLink.icon}
-            onChange={(_, value) => this.setState({ newLink: { ...newLink, icon: value || (newLink.iconType === 'custom' ? '' : 'Link') } })}
+            onChange={(_, value) => this.setState({ newLink: { ...newLink, icon: value || this.getDefaultIconValue(newLink.iconType) } })}
             placeholder={newLink.iconType === 'custom' ? 'https://example.com/logo.png' : 'Link'}
             description={newLink.iconType === 'custom' 
               ? 'Enter a full URL to an image (e.g., https://example.com/logo.png)' 

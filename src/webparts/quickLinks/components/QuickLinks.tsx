@@ -37,20 +37,26 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
       const isValidIconUrl = this.isValidUrl(link.icon);
       if (isValidIconUrl) {
         return (
-          <img 
-            src={link.icon} 
-            alt={link.title} 
-            className={styles.customIcon}
-            onError={(e) => {
-              // Fallback to default icon if image fails to load
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              const fallbackIcon = target.nextSibling as HTMLElement;
-              if (fallbackIcon) {
-                fallbackIcon.style.display = 'inline-block';
-              }
-            }}
-          />
+          <>
+            <img 
+              src={link.icon} 
+              alt={link.title} 
+              className={styles.customIcon}
+              onError={(e) => {
+                // Fallback to default icon if image fails to load
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const parent = target.parentElement;
+                if (parent) {
+                  const fallbackIcon = parent.querySelector('.ms-Icon') as HTMLElement;
+                  if (fallbackIcon) {
+                    fallbackIcon.style.display = 'inline-block';
+                  }
+                }
+              }}
+            />
+            <Icon iconName="Link" className={styles.icon} style={{ display: 'none' }} />
+          </>
         );
       } else {
         // Invalid custom icon URL, fallback to default Link icon
