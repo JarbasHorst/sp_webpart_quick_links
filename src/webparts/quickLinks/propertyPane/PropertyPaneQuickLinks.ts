@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {
   IPropertyPaneField,
-  PropertyPaneFieldType
+  PropertyPaneFieldType,
+  IPropertyPaneCustomFieldProps
 } from '@microsoft/sp-property-pane';
 import { IQuickLinkItem } from '../components/IQuickLinkItem';
 import QuickLinksPropertyPanel from './QuickLinksPropertyPanel';
@@ -13,10 +14,8 @@ export interface IQuickLinksPropertyPaneFieldProps {
   onLinksChanged: (links: IQuickLinkItem[]) => void;
 }
 
-export interface IQuickLinksPropertyPaneFieldInternalProps extends IQuickLinksPropertyPaneFieldProps {
+export interface IQuickLinksPropertyPaneFieldInternalProps extends IQuickLinksPropertyPaneFieldProps, IPropertyPaneCustomFieldProps {
   targetProperty: string;
-  onRender(elem: HTMLElement): void;
-  onDispose(elem: HTMLElement): void;
 }
 
 class QuickLinksPropertyPaneField implements IPropertyPaneField<IQuickLinksPropertyPaneFieldProps> {
@@ -28,6 +27,7 @@ class QuickLinksPropertyPaneField implements IPropertyPaneField<IQuickLinksPrope
   constructor(targetProperty: string, properties: IQuickLinksPropertyPaneFieldProps) {
     this.targetProperty = targetProperty;
     this.properties = {
+      key: `quickLinks_${targetProperty}`,
       ...properties,
       targetProperty,
       onRender: this.onRender.bind(this),
