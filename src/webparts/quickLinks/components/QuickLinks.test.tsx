@@ -171,6 +171,38 @@ describe('QuickLinks Component', () => {
     expect(link).toHaveAttribute('href', './page');
   });
 
+  it('should accept relative URLs starting with ../', () => {
+    const relativeLinks: IQuickLinkItem[] = [
+      {
+        title: 'Parent Relative Link',
+        url: '../parent/page',
+        icon: 'Link',
+        openInNewTab: false
+      }
+    ];
+    const props = { ...defaultProps, links: relativeLinks };
+    const { container } = render(<QuickLinks {...props} />);
+    
+    const link = container.querySelector('a');
+    expect(link).toHaveAttribute('href', '../parent/page');
+  });
+
+  it('should accept query string URLs starting with ?', () => {
+    const queryLinks: IQuickLinkItem[] = [
+      {
+        title: 'Query String Link',
+        url: '?param=value',
+        icon: 'Link',
+        openInNewTab: false
+      }
+    ];
+    const props = { ...defaultProps, links: queryLinks };
+    const { container } = render(<QuickLinks {...props} />);
+    
+    const link = container.querySelector('a');
+    expect(link).toHaveAttribute('href', '?param=value');
+  });
+
   it('should accept fragment URLs starting with #', () => {
     const fragmentLinks: IQuickLinkItem[] = [
       {
