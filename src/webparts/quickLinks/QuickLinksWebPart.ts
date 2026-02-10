@@ -87,10 +87,10 @@ export default class QuickLinksWebPart extends BaseClientSideWebPart<IQuickLinks
               groupName: strings.BasicGroupName,
               groupFields: [
                 PropertyPaneTextField('title', {
-                  label: 'Web Part Title'
+                  label: strings.WebPartTitleLabel
                 }),
                 PropertyPaneQuickLinks('links', {
-                  label: 'Quick Links',
+                  label: strings.QuickLinksLabel,
                   links: this.properties.links || [],
                   onLinksChanged: (links: IQuickLinkItem[]) => {
                     this.properties.links = links;

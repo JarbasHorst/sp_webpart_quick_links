@@ -3,6 +3,7 @@ import styles from './QuickLinks.module.scss';
 import type { IQuickLinksProps } from './IQuickLinksProps';
 import type { IQuickLinkItem } from './IQuickLinkItem';
 import { Icon } from '@fluentui/react/lib/Icon';
+import * as strings from 'QuickLinksWebPartStrings';
 
 export default class QuickLinks extends React.Component<IQuickLinksProps> {
   private isValidUrl(url: string): boolean {
@@ -84,7 +85,7 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
               // Create accessible label for the link
               // Include "opens in new tab" in aria-label to avoid duplication with aria-describedby
               const ariaLabel = link.openInNewTab 
-                ? `${link.title} (opens in new tab)` 
+                ? `${link.title} ${strings.OpensInNewTabSuffix}` 
                 : link.title;
               
               return (
@@ -113,7 +114,7 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
           ) : (
             <div className={styles.emptyState} role="status" aria-live="polite">
               <Icon iconName="Link" className={styles.emptyIcon} aria-hidden="true" />
-              <p>No quick links configured. Please edit the web part to add links.</p>
+              <p>{strings.NoLinksMessage}</p>
             </div>
           )}
         </div>
