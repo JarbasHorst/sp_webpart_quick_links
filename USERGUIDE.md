@@ -38,9 +38,17 @@ Each link card includes:
 
 ### Responsive Design
 
-- **Desktop**: 4 cards per row (or as many as fit)
-- **Tablet**: 2-3 cards per row
-- **Mobile**: 1-2 cards per row
+The Quick Links web part automatically adapts to different screen sizes:
+
+- **Desktop (> 768px)**: Cards use CSS Grid `minmax(140px, 150px)` with 48px icons and 16px spacing; typical card width is 140-150px
+- **Tablet (481px–768px)**: Cards use flexible `minmax(120px, 1fr)` with 40px icons and 12px spacing; cards adapt to available width
+- **Mobile (≤ 480px)**: Cards use flexible `minmax(100px, 1fr)` with 36px icons and 10px spacing; cards expand to fill width
+
+The responsive grid ensures:
+- No horizontal scrolling on any device
+- Optimal card sizes for each screen
+- Touch-friendly tap targets on mobile
+- Reduced padding and gaps on smaller screens
 
 ## Configuration Interface
 
@@ -288,11 +296,16 @@ The Quick Links web part is designed with accessibility in mind:
 
 ## Mobile Experience
 
-The web part is fully responsive:
+The web part is fully responsive and optimized for mobile devices:
 
-- **Touch Friendly**: Large tap targets for mobile devices
-- **Adaptive Layout**: Grid adjusts to screen size
-- **Performance**: Optimized for mobile connections
+- **Touch Friendly**: Large tap targets optimized for finger interaction
+- **Adaptive Layout**: Grid adjusts automatically to screen width
+- **No Horizontal Scroll**: Cards resize to fit within the viewport
+- **Performance**: Optimized CSS for fast mobile rendering
+- **Reduced Spacing**: Compact padding and gaps on small screens
+- **Scaled Icons**: Icons resize from 48px (desktop) to 36px (mobile) for better fit
+
+The component uses CSS media queries at 768px and 480px breakpoints to deliver the best experience across all devices.
 
 ## Support
 
