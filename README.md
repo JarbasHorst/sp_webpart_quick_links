@@ -4,7 +4,7 @@
 
 A modern SharePoint Framework (SPFx) web part that allows users to create and display quick links with custom icons, URLs, and target options. This web part features a card-based design with hover effects and supports both light and dark themes.
 
-![Quick Links Web Part Demo](https://github.com/user-attachments/assets/c9599f51-fc49-4a04-867a-4e58feb5c7ae)
+![Quick Links Web Part Demo](https://github.com/user-attachments/assets/9b7a5cba-92be-4d50-89d2-7254c4a7b2fb)
 
 ## Features
 
