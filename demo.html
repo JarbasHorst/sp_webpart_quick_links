@@ -31,23 +31,24 @@
         }
         .linksContainer {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, 150px);
             gap: 16px;
             margin-top: 16px;
         }
         .linkCard {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            justify-content: center;
-            padding: 24px;
+            justify-content: flex-start;
+            padding: 8px;
             background-color: #ffffff;
             border: 1px solid #edebe9;
-            border-radius: 8px;
+            border-radius: 4px;
             text-decoration: none;
             transition: all 0.2s ease-in-out;
             cursor: pointer;
-            min-height: 140px;
+            height: 40px;
+            width: 150px;
             box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
         }
         .linkCard:hover {
@@ -63,22 +64,26 @@
             transform: translateY(0);
         }
         .iconContainer {
-            margin-bottom: 16px;
+            margin-right: 8px;
+            flex-shrink: 0;
         }
         .icon {
-            font-size: 48px;
+            font-size: 20px;
             color: #0078d4;
             transition: all 0.2s ease-in-out;
         }
         .linkText {
-            text-align: center;
-            width: 100%;
+            text-align: left;
+            flex: 1;
+            overflow: hidden;
         }
         .linkTitle {
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 600;
             color: #323130;
-            word-break: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .demo-notice {
             background-color: #fff4ce;
