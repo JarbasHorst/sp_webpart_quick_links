@@ -14,7 +14,7 @@ The web part is fully keyboard accessible:
 - **Tab Navigation**: All link cards are keyboard navigable using the Tab key
 - **Enter/Space**: Activate links using Enter or Space keys
 - **Focus Indicators**: Clear, visible focus indicators with 3px outline and 2px offset
-- **Focus Visible**: Enhanced focus states appear only for keyboard navigation (`:focus-visible`), not on mouse clicks
+- **Focus Visible**: Enhanced focus states use `:focus:not(:focus-visible)` to show indicators for keyboard navigation but not mouse clicks in modern browsers. Older browsers without `:focus-visible` support fall back to showing focus indicators for all focus events, which is still WCAG compliant.
 
 #### Property Pane
 - **Sequential Tab Order**: All form controls follow a logical tab order
@@ -27,7 +27,6 @@ The web part is fully keyboard accessible:
 #### ARIA Labels and Descriptions
 - **Link Cards**: Each link has an `aria-label` that includes the link title and whether it opens in a new tab
   - Example: "Company Intranet (opens in new tab)"
-- **New Tab Indication**: Links that open in new tabs have an additional `aria-describedby` attribute pointing to a visually hidden description
 - **Section Labels**: The main section has an `aria-label` for context
 - **Decorative Icons**: All decorative icons are marked with `aria-hidden="true"` to prevent screen reader announcement
 
@@ -198,11 +197,12 @@ Verify:
 
 ## Browser Support
 
-The accessibility features work in all modern browsers:
+The accessibility features work in modern browsers with full support for CSS features like `:focus-visible` and `prefers-contrast`:
 - Chrome/Edge (Chromium) 90+
 - Firefox 88+
-- Safari 14+
-- Edge (Legacy) 18+
+- Safari 15.4+
+
+**Note**: Browsers without `:focus-visible` support (including older versions) will fall back to showing focus indicators on all focus events (keyboard and mouse), which is still WCAG compliant but may show focus rings on mouse clicks. The implementation uses `:focus:not(:focus-visible)` to provide the best experience in modern browsers while maintaining accessibility in older browsers.
 
 ## Known Limitations
 

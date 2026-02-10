@@ -143,15 +143,19 @@
         }
         
         /* Keyboard focus state - WCAG 2.2 AAA requirement */
+        /* Fallback for browsers without :focus-visible support */
         .linkCard:focus {
-            outline: none;
-        }
-        
-        .linkCard:focus-visible {
             outline: 3px solid #0078d4;
             outline-offset: 2px;
             border-color: #0078d4;
             box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.2), 0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108);
+        }
+        
+        /* Remove default focus styles when :focus-visible is supported and element is focused via mouse */
+        .linkCard:focus:not(:focus-visible) {
+            outline: none;
+            box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
+            border-color: #edebe9;
         }
         
         .linkCard:hover {
@@ -292,62 +296,57 @@
                 <h2 class="title">Company Resources</h2>
                 <div class="linksContainer" role="list">
                     <div role="listitem">
-                        <a href="https://www.microsoft.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Company Intranet (opens in new tab)" aria-describedby="new-tab-desc-0">
+                        <a href="https://www.microsoft.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Company Intranet (opens in new tab)">
                             <div class="iconContainer" aria-hidden="true">
                                 <i class="icon ms-Icon ms-Icon--Home"></i>
                             </div>
                             <div class="linkText">
                                 <span class="linkTitle">Company Intranet</span>
                             </div>
-                            <span id="new-tab-desc-0" class="visuallyHidden">Opens in a new tab</span>
                         </a>
                     </div>
                     
                     <div role="listitem">
-                        <a href="https://outlook.office.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Email (opens in new tab)" aria-describedby="new-tab-desc-1">
+                        <a href="https://outlook.office.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Email (opens in new tab)">
                             <div class="iconContainer" aria-hidden="true">
                                 <i class="icon ms-Icon ms-Icon--Mail"></i>
                             </div>
                             <div class="linkText">
                                 <span class="linkTitle">Email</span>
                             </div>
-                            <span id="new-tab-desc-1" class="visuallyHidden">Opens in a new tab</span>
                         </a>
                     </div>
                     
                     <div role="listitem">
-                        <a href="https://teams.microsoft.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Teams (opens in new tab)" aria-describedby="new-tab-desc-2">
+                        <a href="https://teams.microsoft.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Teams (opens in new tab)">
                             <div class="iconContainer" aria-hidden="true">
                                 <i class="icon ms-Icon ms-Icon--People"></i>
                             </div>
                             <div class="linkText">
                                 <span class="linkTitle">Teams</span>
                             </div>
-                            <span id="new-tab-desc-2" class="visuallyHidden">Opens in a new tab</span>
                         </a>
                     </div>
                     
                     <div role="listitem">
-                        <a href="https://www.office.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="OneDrive (opens in new tab)" aria-describedby="new-tab-desc-3">
+                        <a href="https://www.office.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="OneDrive (opens in new tab)">
                             <div class="iconContainer" aria-hidden="true">
                                 <i class="icon ms-Icon ms-Icon--OneDrive"></i>
                             </div>
                             <div class="linkText">
                                 <span class="linkTitle">OneDrive</span>
                             </div>
-                            <span id="new-tab-desc-3" class="visuallyHidden">Opens in a new tab</span>
                         </a>
                     </div>
                     
                     <div role="listitem">
-                        <a href="https://portal.office.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Calendar (opens in new tab)" aria-describedby="new-tab-desc-4">
+                        <a href="https://portal.office.com" class="linkCard" target="_blank" rel="noopener noreferrer" aria-label="Calendar (opens in new tab)">
                             <div class="iconContainer" aria-hidden="true">
                                 <i class="icon ms-Icon ms-Icon--Calendar"></i>
                             </div>
                             <div class="linkText">
                                 <span class="linkTitle">Calendar</span>
                             </div>
-                            <span id="new-tab-desc-4" class="visuallyHidden">Opens in a new tab</span>
                         </a>
                     </div>
                     

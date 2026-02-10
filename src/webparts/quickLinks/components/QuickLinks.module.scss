@@ -60,15 +60,19 @@
   box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
 
   // Keyboard focus state - WCAG 2.2 AAA requirement
+  // Fallback for browsers without :focus-visible support
   &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
     outline: 3px solid var(--themePrimary, "[theme:themePrimary, default: #0078d4]");
     outline-offset: 2px;
     border-color: var(--themePrimary, "[theme:themePrimary, default: #0078d4]");
     box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.2), 0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108);
+  }
+
+  // Remove default focus styles and use :focus-visible when supported
+  &:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
+    border-color: var(--neutralLight, "[theme:neutralLight, default: #edebe9]");
   }
 
   &:hover {

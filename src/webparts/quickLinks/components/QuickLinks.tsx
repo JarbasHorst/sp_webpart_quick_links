@@ -80,9 +80,9 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
             links.map((link, index) => {
               const isValid = this.isValidUrl(link.url);
               const safeUrl = isValid ? link.url : '#';
-              const newTabDescriptionId = link.openInNewTab ? `new-tab-desc-${index}` : undefined;
               
               // Create accessible label for the link
+              // Include "opens in new tab" in aria-label to avoid duplication with aria-describedby
               const ariaLabel = link.openInNewTab 
                 ? `${link.title} (opens in new tab)` 
                 : link.title;
@@ -95,7 +95,6 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
                     target={link.openInNewTab ? '_blank' : '_self'}
                     rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
                     aria-label={ariaLabel}
-                    aria-describedby={newTabDescriptionId}
                     {...(!isValid && { 
                       onClick: (e) => { e.preventDefault(); },
                       'aria-disabled': 'true'
@@ -107,11 +106,6 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
                     <div className={styles.linkText}>
                       <span className={styles.linkTitle}>{link.title}</span>
                     </div>
-                    {link.openInNewTab && (
-                      <span id={newTabDescriptionId} className={styles.visuallyHidden}>
-                        Opens in a new tab
-                      </span>
-                    )}
                   </a>
                 </div>
               );
