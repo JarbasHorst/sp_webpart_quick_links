@@ -18,6 +18,7 @@ interface IQuickLinksPropertyPanelState {
   links: IQuickLinkItem[];
   editingIndex: number;
   newLink: IQuickLinkItem;
+  urlError?: string;
 }
 
 export default class QuickLinksPropertyPanel extends React.Component<IQuickLinksPropertyPanelProps, IQuickLinksPropertyPanelState> {
@@ -26,7 +27,8 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
     this.state = {
       links: props.links || [],
       editingIndex: -1,
-      newLink: this.getEmptyLink()
+      newLink: this.getEmptyLink(),
+      urlError: undefined
     };
   }
 
@@ -44,13 +46,37 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
     return iconType === 'custom' ? '' : 'Link';
   }
 
+  private validateUrl(url: string): string | undefined {
+    // URL must start with http:// or https://
+    if (!url) {
+      return undefined; // Empty URL will be caught by required validation
+    }
+    
+    const trimmedUrl = url.trim();
+    const lowerUrl = trimmedUrl.toLowerCase();
+    
+    if (!lowerUrl.startsWith('http://') && !lowerUrl.startsWith('https://')) {
+      return 'URL must start with http:// or https://';
+    }
+    
+    return undefined;
+  }
+
   private handleAddLink = (): void => {
     const { newLink, links } = this.state;
+    const urlError = this.validateUrl(newLink.url);
+    
+    if (urlError) {
+      this.setState({ urlError });
+      return;
+    }
+    
     if (newLink.title && newLink.url) {
       const updatedLinks = [...links, newLink];
       this.setState({
         links: updatedLinks,
-        newLink: this.getEmptyLink()
+        newLink: this.getEmptyLink(),
+        urlError: undefined
       });
       this.props.onLinksChanged(updatedLinks);
     }
@@ -58,13 +84,21 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
 
   private handleUpdateLink = (): void => {
     const { newLink, links, editingIndex } = this.state;
+    const urlError = this.validateUrl(newLink.url);
+    
+    if (urlError) {
+      this.setState({ urlError });
+      return;
+    }
+    
     if (newLink.title && newLink.url && editingIndex >= 0) {
       const updatedLinks = [...links];
       updatedLinks[editingIndex] = newLink;
       this.setState({
         links: updatedLinks,
         editingIndex: -1,
-        newLink: this.getEmptyLink()
+        newLink: this.getEmptyLink(),
+        urlError: undefined
       });
       this.props.onLinksChanged(updatedLinks);
     }
@@ -86,13 +120,14 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
   private handleCancelEdit = (): void => {
     this.setState({
       editingIndex: -1,
-      newLink: this.getEmptyLink()
+      newLink: this.getEmptyLink(),
+      urlError: undefined
     });
   };
 
   public render(): React.ReactElement<IQuickLinksPropertyPanelProps> {
     const { label } = this.props;
-    const { links, newLink, editingIndex } = this.state;
+    const { links, newLink, editingIndex, urlError } = this.state;
 
     return (
       <div className={styles.quickLinksPropertyPanel}>
@@ -109,8 +144,16 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
           <TextField
             label="URL"
             value={newLink.url}
-            onChange={(_, value) => this.setState({ newLink: { ...newLink, url: value || '' } })}
+            onChange={(_, value) => {
+              const url = value || '';
+              const error = this.validateUrl(url);
+              this.setState({ 
+                newLink: { ...newLink, url },
+                urlError: error
+              });
+            }}
             required
+            errorMessage={urlError}
           />
           <ChoiceGroup
             label="Icon Type"
@@ -144,11 +187,11 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
           <div className={styles.buttonGroup}>
             {editingIndex >= 0 ? (
               <>
-                <PrimaryButton text="Update" onClick={this.handleUpdateLink} disabled={!newLink.title || !newLink.url} />
+                <PrimaryButton text="Update" onClick={this.handleUpdateLink} disabled={!newLink.title || !newLink.url || !!urlError} />
                 <DefaultButton text="Cancel" onClick={this.handleCancelEdit} />
               </>
             ) : (
-              <PrimaryButton text="Add Link" onClick={this.handleAddLink} disabled={!newLink.title || !newLink.url} />
+              <PrimaryButton text="Add Link" onClick={this.handleAddLink} disabled={!newLink.title || !newLink.url || !!urlError} />
             )}
           </div>
         </div>
