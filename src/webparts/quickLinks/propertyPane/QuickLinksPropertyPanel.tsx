@@ -49,7 +49,7 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
   private validateUrl(url: string): string | undefined {
     // Validate URL to match runtime component validation
     // Allow http, https, relative URLs, but reject dangerous schemes
-    if (!url || !url.trim()) {
+    if (!url?.trim()) {
       return undefined; // Empty URL will be caught by required field validation
     }
     

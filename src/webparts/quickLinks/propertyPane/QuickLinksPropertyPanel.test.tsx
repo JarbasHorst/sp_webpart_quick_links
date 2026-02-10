@@ -187,14 +187,14 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
     
     const titleInput = screen.getByRole('textbox', { name: /Link Title/i });
     const urlInput = getUrlInput();
-    const addButton = screen.getByText('Add Link').closest('button');
     
     // Fill in form with invalid URL
     fireEvent.change(titleInput, { target: { value: 'Google' } });
     fireEvent.change(urlInput, { target: { value: 'www.google.com' } });
     
     // Try to add (button is disabled, but let's ensure handler works correctly too)
-    if (addButton) fireEvent.click(addButton);
+    const addButton = screen.getByText('Add Link').closest('button');
+    fireEvent.click(addButton!);
     
     // onLinksChanged should not be called
     expect(mockOnLinksChanged).not.toHaveBeenCalled();
@@ -205,14 +205,14 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
     
     const titleInput = screen.getByRole('textbox', { name: /Link Title/i });
     const urlInput = getUrlInput();
-    const addButton = screen.getByText('Add Link').closest('button');
     
     // Fill in form with valid URL
     fireEvent.change(titleInput, { target: { value: 'Google' } });
     fireEvent.change(urlInput, { target: { value: 'https://www.google.com' } });
     
     // Add the link
-    if (addButton) fireEvent.click(addButton);
+    const addButton = screen.getByText('Add Link').closest('button');
+    fireEvent.click(addButton!);
     
     // onLinksChanged should be called with the new link
     expect(mockOnLinksChanged).toHaveBeenCalledWith([
@@ -228,14 +228,14 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
     
     const titleInput = screen.getByRole('textbox', { name: /Link Title/i });
     const urlInput = getUrlInput();
-    const addButton = screen.getByText('Add Link').closest('button');
     
     // Fill in form with relative URL
     fireEvent.change(titleInput, { target: { value: 'SharePoint Site' } });
     fireEvent.change(urlInput, { target: { value: '/sites/MySite' } });
     
     // Add the link
-    if (addButton) fireEvent.click(addButton);
+    const addButton = screen.getByText('Add Link').closest('button');
+    fireEvent.click(addButton!);
     
     // onLinksChanged should be called with the new link
     expect(mockOnLinksChanged).toHaveBeenCalledWith([
@@ -309,14 +309,14 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
     
     const titleInput = screen.getByRole('textbox', { name: /Link Title/i });
     const urlInput = getUrlInput();
-    const addButton = screen.getByText('Add Link').closest('button');
     
     // Fill in form with URL that has spaces
     fireEvent.change(titleInput, { target: { value: 'Test' } });
     fireEvent.change(urlInput, { target: { value: '  https://example.com  ' } });
     
     // Add the link
-    if (addButton) fireEvent.click(addButton);
+    const addButton = screen.getByText('Add Link').closest('button');
+    fireEvent.click(addButton!);
     
     // URL should be stored without spaces
     expect(mockOnLinksChanged).toHaveBeenCalledWith([
@@ -407,7 +407,7 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
     
     // Update the link
     const updateButton = screen.getByText('Update').closest('button');
-    if (updateButton) fireEvent.click(updateButton);
+    fireEvent.click(updateButton!);
     
     // URL should be stored without spaces
     expect(mockOnLinksChanged).toHaveBeenCalledWith([
