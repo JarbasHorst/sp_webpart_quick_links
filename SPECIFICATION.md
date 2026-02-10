@@ -1192,7 +1192,7 @@ All content rendered via React's safe JSX rendering. No use of `dangerouslySetIn
 
 **Categories:**
 
-1. **Web Part Property Pane** (3 strings)
+1. **Web Part Property Pane** (4 strings)
    - PropertyPaneDescription
    - BasicGroupName
    - WebPartTitleLabel
