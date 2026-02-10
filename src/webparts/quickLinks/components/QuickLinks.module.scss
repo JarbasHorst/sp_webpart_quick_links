@@ -43,6 +43,10 @@
       color: var(--themePrimary, "[theme:themePrimary, default: #0078d4]");
       transform: scale(1.1);
     }
+
+    .customIcon {
+      transform: scale(1.1);
+    }
   }
 
   &:active {
@@ -57,6 +61,13 @@
 .icon {
   font-size: 48px;
   color: var(--themePrimary, "[theme:themePrimary, default: #0078d4]");
+  transition: all 0.2s ease-in-out;
+}
+
+.customIcon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
   transition: all 0.2s ease-in-out;
 }
 
