@@ -5,6 +5,7 @@ import { PrimaryButton, DefaultButton } from '@fluentui/react/lib/Button';
 import { Icon } from '@fluentui/react/lib/Icon';
 import { Checkbox } from '@fluentui/react/lib/Checkbox';
 import { Label } from '@fluentui/react/lib/Label';
+import { ChoiceGroup } from '@fluentui/react/lib/ChoiceGroup';
 import styles from './QuickLinksPropertyPanel.module.scss';
 
 export interface IQuickLinksPropertyPanelProps {
@@ -34,8 +35,13 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
       title: '',
       url: '',
       icon: 'Link',
+      iconType: 'fluent',
       openInNewTab: true
     };
+  }
+
+  private getDefaultIconValue(iconType: 'fluent' | 'custom' | undefined): string {
+    return iconType === 'custom' ? '' : 'Link';
   }
 
   private handleAddLink = (): void => {
@@ -106,12 +112,29 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
             onChange={(_, value) => this.setState({ newLink: { ...newLink, url: value || '' } })}
             required
           />
+          <ChoiceGroup
+            label="Icon Type"
+            selectedKey={newLink.iconType || 'fluent'}
+            options={[
+              { key: 'fluent', text: 'Fluent UI Icon' },
+              { key: 'custom', text: 'Custom Image URL' }
+            ]}
+            onChange={(_, option) => this.setState({ 
+              newLink: { 
+                ...newLink, 
+                iconType: option?.key as 'fluent' | 'custom',
+                icon: this.getDefaultIconValue(option?.key as 'fluent' | 'custom')
+              } 
+            })}
+          />
           <TextField
-            label="Icon Name"
+            label={newLink.iconType === 'custom' ? 'Image URL' : 'Icon Name'}
             value={newLink.icon}
-            onChange={(_, value) => this.setState({ newLink: { ...newLink, icon: value || 'Link' } })}
-            placeholder="Link"
-            description="Enter a Fluent UI icon name (e.g., Home, Globe, Mail, Document)"
+            onChange={(_, value) => this.setState({ newLink: { ...newLink, icon: value || this.getDefaultIconValue(newLink.iconType) } })}
+            placeholder={newLink.iconType === 'custom' ? 'https://example.com/logo.png' : 'Link'}
+            description={newLink.iconType === 'custom' 
+              ? 'Enter a full URL to an image (e.g., https://example.com/logo.png)' 
+              : 'Enter a Fluent UI icon name (e.g., Home, Globe, Mail, Document)'}
           />
           <Checkbox
             label="Open in new tab"
@@ -134,19 +157,26 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
         {links.length > 0 && (
           <div className={styles.linksList}>
             <Label>Current Links</Label>
-            {links.map((link, index) => (
-              <div key={index} className={styles.linkItem}>
-                <div className={styles.linkInfo}>
-                  <Icon iconName={link.icon || 'Link'} className={styles.linkIcon} />
-                  <div className={styles.linkDetails}>
-                    <div className={styles.linkTitle}>{link.title}</div>
-                    <div className={styles.linkUrl}>{link.url}</div>
-                    <div className={styles.linkTarget}>
-                      {link.openInNewTab ? 'Opens in new tab' : 'Opens in same tab'}
+            {links.map((link, index) => {
+              const iconType = link.iconType || 'fluent';
+              return (
+                <div key={index} className={styles.linkItem}>
+                  <div className={styles.linkInfo}>
+                    {iconType === 'custom' && link.icon ? (
+                      <img src={link.icon} alt={link.title} className={styles.linkIcon} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                    ) : (
+                      <Icon iconName={link.icon || 'Link'} className={styles.linkIcon} />
+                    )}
+                    <div className={styles.linkDetails}>
+                      <div className={styles.linkTitle}>{link.title}</div>
+                      <div className={styles.linkUrl}>{link.url}</div>
+                      <div className={styles.linkTarget}>
+                        {link.openInNewTab ? 'Opens in new tab' : 'Opens in same tab'}
+                        {iconType === 'custom' && ' • Custom icon'}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className={styles.linkActions}>
+                  <div className={styles.linkActions}>
                   <DefaultButton
                     text="Edit"
                     onClick={() => this.handleEditLink(index)}
@@ -158,7 +188,8 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
                   />
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         )}
       </div>
