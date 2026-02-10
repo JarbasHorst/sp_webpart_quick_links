@@ -13,7 +13,7 @@ define([], function() {
     "AppOutlookEnvironment": "L'application s'exécute dans Outlook",
     "UnknownEnvironment": "L'application s'exécute dans un environnement inconnu",
     // Web Part property pane
-    "WebPartTitleLabel": "Titre du composant WebPart",
+    "WebPartTitleLabel": "Titre du composant",
     "QuickLinksLabel": "Liens rapides",
     // Property pane form labels
     "LinkTitleLabel": "Titre du lien",
@@ -41,17 +41,18 @@ define([], function() {
     "CancelButtonAriaLabel": "Annuler la modification et ignorer les modifications",
     "AddLinkButton": "Ajouter un lien",
     "AddLinkButtonAriaLabel": "Ajouter le nouveau lien à la liste",
-    "LinkActionsAriaLabel": "Actions du lien",
+    "LinkActionsAriaLabel": "Actions du formulaire",
+    "LinkActionsAriaLabelFormat": "Actions pour {0}",
     // Property pane links list
     "CurrentLinksLabel": "Liens actuels",
     "ConfiguredLinksAriaLabel": "lien rapide configuré",
     "OpensInNewTab": "S'ouvre dans un nouvel onglet",
     "OpensInSameTab": "S'ouvre dans le même onglet",
     "CustomIcon": "Icône personnalisée",
-    "EditLinkTitle": "Modifier",
-    "EditLinkAriaLabel": "Modifier le lien :",
-    "DeleteLinkTitle": "Supprimer",
-    "DeleteLinkAriaLabel": "Supprimer le lien :",
+    "EditLinkTitleFormat": "Modifier {0}",
+    "EditLinkAriaLabelFormat": "Modifier le lien : {0}",
+    "DeleteLinkTitleFormat": "Supprimer {0}",
+    "DeleteLinkAriaLabelFormat": "Supprimer le lien : {0}",
     "EditFormAriaLabel": "Modifier le lien rapide",
     "AddFormAriaLabel": "Ajouter un nouveau lien rapide",
     // URL validation errors

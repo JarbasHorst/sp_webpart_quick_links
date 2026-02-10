@@ -231,7 +231,7 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
             onChange={(_, checked) => this.setState({ newLink: { ...newLink, openInNewTab: !!checked } })}
             ariaLabel={strings.OpenInNewTabAriaLabel}
           />
-          <div className={styles.buttonGroup} role="group" aria-label={strings.LinkActionsAriaLabel}>
+          <div className={styles.buttonGroup} role="group" aria-label={strings.AddLinkButtonAriaLabel}>
             {editingIndex >= 0 ? (
               <>
                 <PrimaryButton 
@@ -281,19 +281,19 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
                       </div>
                     </div>
                   </div>
-                  <div className={styles.linkActions} role="group" aria-label={`${strings.LinkActionsAriaLabel} ${link.title}`}>
+                  <div className={styles.linkActions} role="group" aria-label={strings.LinkActionsAriaLabelFormat.replace('{0}', link.title)}>
                   <IconButton
                     iconProps={{ iconName: 'Edit' }}
-                    title={`${strings.EditLinkTitle} ${link.title}`}
-                    ariaLabel={`${strings.EditLinkAriaLabel} ${link.title}`}
+                    title={strings.EditLinkTitleFormat.replace('{0}', link.title)}
+                    ariaLabel={strings.EditLinkAriaLabelFormat.replace('{0}', link.title)}
                     onClick={() => this.handleEditLink(index)}
                     disabled={editingIndex >= 0}
                     className={styles.iconButton}
                   />
                   <IconButton
                     iconProps={{ iconName: 'Delete' }}
-                    title={`${strings.DeleteLinkTitle} ${link.title}`}
-                    ariaLabel={`${strings.DeleteLinkAriaLabel} ${link.title}`}
+                    title={strings.DeleteLinkTitleFormat.replace('{0}', link.title)}
+                    ariaLabel={strings.DeleteLinkAriaLabelFormat.replace('{0}', link.title)}
                     onClick={() => this.handleDeleteLink(index)}
                     disabled={editingIndex >= 0}
                     className={styles.iconButton}

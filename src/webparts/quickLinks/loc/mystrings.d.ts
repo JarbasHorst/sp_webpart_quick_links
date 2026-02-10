@@ -41,16 +41,17 @@ declare interface IQuickLinksWebPartStrings {
   AddLinkButton: string;
   AddLinkButtonAriaLabel: string;
   LinkActionsAriaLabel: string;
+  LinkActionsAriaLabelFormat: string;
   // Property pane links list
   CurrentLinksLabel: string;
   ConfiguredLinksAriaLabel: string;
   OpensInNewTab: string;
   OpensInSameTab: string;
   CustomIcon: string;
-  EditLinkTitle: string;
-  EditLinkAriaLabel: string;
-  DeleteLinkTitle: string;
-  DeleteLinkAriaLabel: string;
+  EditLinkTitleFormat: string;
+  EditLinkAriaLabelFormat: string;
+  DeleteLinkTitleFormat: string;
+  DeleteLinkAriaLabelFormat: string;
   EditFormAriaLabel: string;
   AddFormAriaLabel: string;
   // URL validation errors
