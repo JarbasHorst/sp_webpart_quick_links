@@ -44,7 +44,8 @@ declare interface IQuickLinksWebPartStrings {
   LinkActionsAriaLabelFormat: string;
   // Property pane links list
   CurrentLinksLabel: string;
-  ConfiguredLinksAriaLabel: string;
+  ConfiguredLinksAriaLabelSingular: string;
+  ConfiguredLinksAriaLabelPlural: string;
   OpensInNewTab: string;
   OpensInSameTab: string;
   CustomIcon: string;

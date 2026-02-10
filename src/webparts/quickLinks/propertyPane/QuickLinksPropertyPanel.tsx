@@ -261,7 +261,11 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
         {links.length > 0 && (
           <div className={styles.linksList}>
             <Label>{strings.CurrentLinksLabel} ({links.length})</Label>
-            <div role="list" aria-label={`${links.length} ${strings.ConfiguredLinksAriaLabel}${links.length !== 1 ? 's' : ''}`}>
+            <div role="list" aria-label={
+              links.length === 1 
+                ? strings.ConfiguredLinksAriaLabelSingular.replace('{0}', links.length.toString())
+                : strings.ConfiguredLinksAriaLabelPlural.replace('{0}', links.length.toString())
+            }>
             {links.map((link, index) => {
               const iconType = link.iconType || 'fluent';
               return (

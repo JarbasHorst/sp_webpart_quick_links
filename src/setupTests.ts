@@ -45,7 +45,8 @@ jest.mock('QuickLinksWebPartStrings', () => ({
   LinkActionsAriaLabelFormat: 'Actions for {0}',
   // Property pane links list
   CurrentLinksLabel: 'Current Links',
-  ConfiguredLinksAriaLabel: 'configured quick link',
+  ConfiguredLinksAriaLabelSingular: '{0} configured quick link',
+  ConfiguredLinksAriaLabelPlural: '{0} configured quick links',
   OpensInNewTab: 'Opens in new tab',
   OpensInSameTab: 'Opens in same tab',
   CustomIcon: 'Custom icon',

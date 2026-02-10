@@ -45,7 +45,8 @@ define([], function() {
     "LinkActionsAriaLabelFormat": "Aktionen für {0}",
     // Property pane links list
     "CurrentLinksLabel": "Aktuelle Links",
-    "ConfiguredLinksAriaLabel": "konfigurierter Schnelllink",
+    "ConfiguredLinksAriaLabelSingular": "{0} konfigurierter Schnelllink",
+    "ConfiguredLinksAriaLabelPlural": "{0} konfigurierte Schnelllinks",
     "OpensInNewTab": "Wird in neuem Tab geöffnet",
     "OpensInSameTab": "Wird im selben Tab geöffnet",
     "CustomIcon": "Benutzerdefiniertes Symbol",
