@@ -3,7 +3,7 @@
   "solution": {
     "name": "quick-links-webpart-client-side-solution",
     "id": "ed8208a5-7d2f-443b-8a88-5f1e9221de30",
-    "version": "1.0.0.4",
+    "version": "1.0.0.5",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
@@ -30,7 +30,7 @@
         "title": "quick-links-webpart Feature",
         "description": "The feature that activates elements of the quick-links-webpart solution.",
         "id": "fdcd1f6c-7d21-47ee-bfb5-cc505760786d",
-        "version": "1.0.0.4"
+        "version": "1.0.0.5"
       }
     ]
   },
