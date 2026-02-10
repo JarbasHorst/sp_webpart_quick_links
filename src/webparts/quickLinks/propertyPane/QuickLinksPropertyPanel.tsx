@@ -163,7 +163,7 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
                 <div key={index} className={styles.linkItem}>
                   <div className={styles.linkInfo}>
                     {iconType === 'custom' && link.icon ? (
-                      <img src={link.icon} alt={link.title} className={styles.linkIcon} style={{ width: '20px', height: '20px', objectFit: 'contain' }} />
+                      <img src={link.icon} alt={link.title} className={styles.linkIcon} />
                     ) : (
                       <Icon iconName={link.icon || 'Link'} className={styles.linkIcon} />
                     )}
@@ -190,6 +190,7 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
                     title="Delete"
                     ariaLabel="Delete link"
                     onClick={() => this.handleDeleteLink(index)}
+                    disabled={editingIndex >= 0}
                     className={styles.iconButton}
                   />
                 </div>

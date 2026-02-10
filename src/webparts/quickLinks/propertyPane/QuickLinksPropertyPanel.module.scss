@@ -44,6 +44,11 @@
   color: #0078d4;
   flex-shrink: 0;
   margin-top: 2px;
+  
+  // For custom image icons
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .linkDetails {
