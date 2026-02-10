@@ -94,8 +94,8 @@ In the Quick Links section of the property pane:
 
 ### Managing Links
 
-- **Edit**: Click the Edit button next to any link to modify it
-- **Delete**: Click the Delete button to remove a link
+- **Edit**: Click the pen icon (✏️) next to any link to modify it
+- **Delete**: Click the trash icon (🗑️) to remove a link
 - Links are displayed in the order they were added
 
 ## Features
