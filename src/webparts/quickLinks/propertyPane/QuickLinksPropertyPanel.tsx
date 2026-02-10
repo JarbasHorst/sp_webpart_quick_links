@@ -231,7 +231,7 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
             onChange={(_, checked) => this.setState({ newLink: { ...newLink, openInNewTab: !!checked } })}
             ariaLabel={strings.OpenInNewTabAriaLabel}
           />
-          <div className={styles.buttonGroup} role="group" aria-label={strings.AddLinkButtonAriaLabel}>
+          <div className={styles.buttonGroup} role="group" aria-label={strings.LinkActionsAriaLabel}>
             {editingIndex >= 0 ? (
               <>
                 <PrimaryButton 
