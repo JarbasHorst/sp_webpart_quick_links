@@ -169,12 +169,14 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
         <Label>{label}</Label>
         
         {/* Form for adding/editing links */}
-        <div className={styles.linkForm}>
+        <div className={styles.linkForm} role="form" aria-label={editingIndex >= 0 ? "Edit quick link" : "Add new quick link"}>
           <TextField
             label="Link Title"
             value={newLink.title}
             onChange={(_, value) => this.setState({ newLink: { ...newLink, title: value || '' } })}
             required
+            aria-required="true"
+            description="Enter a descriptive title for the link"
           />
           <TextField
             label="URL"
@@ -188,14 +190,17 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
               });
             }}
             required
+            aria-required="true"
+            aria-invalid={!!urlError}
             errorMessage={urlError}
+            description="Enter the full URL (e.g., https://example.com) or a relative URL"
           />
           <ChoiceGroup
             label="Icon Type"
             selectedKey={newLink.iconType || 'fluent'}
             options={[
-              { key: 'fluent', text: 'Fluent UI Icon' },
-              { key: 'custom', text: 'Custom Image URL' }
+              { key: 'fluent', text: 'Fluent UI Icon', ariaLabel: 'Use Fluent UI icon' },
+              { key: 'custom', text: 'Custom Image URL', ariaLabel: 'Use custom image from URL' }
             ]}
             onChange={(_, option) => this.setState({ 
               newLink: { 
@@ -204,7 +209,11 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
                 icon: this.getDefaultIconValue(option?.key as 'fluent' | 'custom')
               } 
             })}
+            aria-describedby="icon-type-description"
           />
+          <span id="icon-type-description" className={styles.visuallyHidden}>
+            Choose between a Fluent UI icon or a custom image for this link
+          </span>
           <TextField
             label={newLink.iconType === 'custom' ? 'Image URL' : 'Icon Name'}
             value={newLink.icon}
@@ -213,20 +222,36 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
             description={newLink.iconType === 'custom' 
               ? 'Enter a full URL to an image (e.g., https://example.com/logo.png)' 
               : 'Enter a Fluent UI icon name (e.g., Home, Globe, Mail, Document)'}
+            aria-label={newLink.iconType === 'custom' ? 'Custom image URL' : 'Fluent UI icon name'}
           />
           <Checkbox
             label="Open in new tab"
             checked={newLink.openInNewTab}
             onChange={(_, checked) => this.setState({ newLink: { ...newLink, openInNewTab: !!checked } })}
+            ariaLabel="Open link in a new browser tab"
           />
-          <div className={styles.buttonGroup}>
+          <div className={styles.buttonGroup} role="group" aria-label="Link actions">
             {editingIndex >= 0 ? (
               <>
-                <PrimaryButton text="Update" onClick={this.handleUpdateLink} disabled={!newLink.title || !newLink.url || !!urlError} />
-                <DefaultButton text="Cancel" onClick={this.handleCancelEdit} />
+                <PrimaryButton 
+                  text="Update" 
+                  onClick={this.handleUpdateLink} 
+                  disabled={!newLink.title || !newLink.url || !!urlError}
+                  ariaLabel="Update the link with new information"
+                />
+                <DefaultButton 
+                  text="Cancel" 
+                  onClick={this.handleCancelEdit}
+                  ariaLabel="Cancel editing and discard changes"
+                />
               </>
             ) : (
-              <PrimaryButton text="Add Link" onClick={this.handleAddLink} disabled={!newLink.title || !newLink.url || !!urlError} />
+              <PrimaryButton 
+                text="Add Link" 
+                onClick={this.handleAddLink} 
+                disabled={!newLink.title || !newLink.url || !!urlError}
+                ariaLabel="Add the new link to the list"
+              />
             )}
           </div>
         </div>
@@ -234,16 +259,17 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
         {/* List of existing links */}
         {links.length > 0 && (
           <div className={styles.linksList}>
-            <Label>Current Links</Label>
+            <Label>Current Links ({links.length})</Label>
+            <div role="list" aria-label={`${links.length} configured quick link${links.length !== 1 ? 's' : ''}`}>
             {links.map((link, index) => {
               const iconType = link.iconType || 'fluent';
               return (
-                <div key={index} className={styles.linkItem}>
+                <div key={index} className={styles.linkItem} role="listitem">
                   <div className={styles.linkInfo}>
                     {iconType === 'custom' && link.icon ? (
-                      <img src={link.icon} alt={link.title} className={styles.linkIcon} />
+                      <img src={link.icon} alt="" role="presentation" className={styles.linkIcon} />
                     ) : (
-                      <Icon iconName={link.icon || 'Link'} className={styles.linkIcon} />
+                      <Icon iconName={link.icon || 'Link'} className={styles.linkIcon} aria-hidden="true" />
                     )}
                     <div className={styles.linkDetails}>
                       <div className={styles.linkTitle}>{link.title}</div>
@@ -254,19 +280,19 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
                       </div>
                     </div>
                   </div>
-                  <div className={styles.linkActions}>
+                  <div className={styles.linkActions} role="group" aria-label={`Actions for ${link.title}`}>
                   <IconButton
                     iconProps={{ iconName: 'Edit' }}
-                    title="Edit"
-                    ariaLabel="Edit link"
+                    title={`Edit ${link.title}`}
+                    ariaLabel={`Edit link: ${link.title}`}
                     onClick={() => this.handleEditLink(index)}
                     disabled={editingIndex >= 0}
                     className={styles.iconButton}
                   />
                   <IconButton
                     iconProps={{ iconName: 'Delete' }}
-                    title="Delete"
-                    ariaLabel="Delete link"
+                    title={`Delete ${link.title}`}
+                    ariaLabel={`Delete link: ${link.title}`}
                     onClick={() => this.handleDeleteLink(index)}
                     disabled={editingIndex >= 0}
                     className={styles.iconButton}
@@ -275,6 +301,7 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
               </div>
             );
             })}
+            </div>
           </div>
         )}
       </div>
