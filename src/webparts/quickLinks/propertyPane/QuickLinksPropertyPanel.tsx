@@ -145,7 +145,7 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
             label="URL"
             value={newLink.url}
             onChange={(_, value) => {
-              const url = value || '';
+              const url = value ? value.trim() : '';
               const error = this.validateUrl(url);
               this.setState({ 
                 newLink: { ...newLink, url },

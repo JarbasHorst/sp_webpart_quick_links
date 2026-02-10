@@ -212,13 +212,18 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
   it('should accept URL with leading/trailing spaces if protocol is present', () => {
     const { container } = render(<QuickLinksPropertyPanel {...defaultProps} />);
     
+    const titleInput = container.querySelector('input[type="text"]') as HTMLInputElement;
     const urlInput = getUrlInput(container);
+    
+    // Fill in title
+    fireEvent.change(titleInput, { target: { value: 'Test' } });
     
     // Enter URL with spaces but valid protocol
     fireEvent.change(urlInput, { target: { value: '  https://www.google.com  ' } });
     
-    // Should be valid
+    // Should be valid and trimmed
     expect(urlInput).toHaveAttribute('aria-invalid', 'false');
+    expect(urlInput.value).toBe('https://www.google.com');
   });
 
   it('should show validation error for URLs starting with ftp://', () => {
