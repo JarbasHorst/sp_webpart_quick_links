@@ -4,6 +4,8 @@
 
 The Quick Links web part allows you to create a visually appealing collection of links on your SharePoint pages. Each link is displayed as a card with an icon, making it easy for users to find and access important resources.
 
+![Quick Links Web Part](https://github.com/user-attachments/assets/9b7a5cba-92be-4d50-89d2-7254c4a7b2fb)
+
 ## Visual Layout
 
 The web part displays links in a responsive grid layout:
