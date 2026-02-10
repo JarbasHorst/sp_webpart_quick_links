@@ -52,6 +52,16 @@ The responsive grid ensures:
 
 ## Configuration Interface
 
+The property pane provides an intuitive interface for managing your quick links with a clean, modern design featuring icon-based actions for better usability.
+
+### Property Pane Design Features
+
+- **Icon Buttons**: Compact edit (✏️) and delete (🗑️) icon buttons instead of text buttons
+- **Better Spacing**: Improved padding and gaps for easier reading and interaction
+- **Clear Hierarchy**: Enhanced visual separation between link information
+- **Larger Icons**: More prominent link icons (28px) for better visual recognition
+- **Improved Typography**: Optimized font sizes for title, URL, and metadata
+
 ### Property Pane Layout
 
 ```
@@ -87,12 +97,12 @@ The responsive grid ensures:
 │  🏠 Home                         │
 │  https://intranet.com           │
 │  Opens in new tab               │
-│  [ Edit ] [ Delete ]            │
+│  [✏️] [🗑️]                      │
 │                                  │
 │  📄 Documents                    │
 │  https://docs.company.com       │
 │  Opens in same tab              │
-│  [ Edit ] [ Delete ]            │
+│  [✏️] [🗑️]                      │
 │                                  │
 └─────────────────────────────────┘
 ```
@@ -132,14 +142,14 @@ Repeat Step 3 to add additional links. You can add as many links as needed.
 
 **To Edit a Link:**
 1. Find the link in the "Current Links" section
-2. Click the **Edit** button
+2. Click the **pen icon** (✏️) button
 3. Modify the fields as needed
 4. Click **Update**
 
 **To Delete a Link:**
 1. Find the link in the "Current Links" section
-2. Click the **Delete** button
-3. Confirm the deletion
+2. Click the **trash icon** (🗑️) button
+3. The link is immediately removed
 
 ### Step 6: Publish the Page
 
