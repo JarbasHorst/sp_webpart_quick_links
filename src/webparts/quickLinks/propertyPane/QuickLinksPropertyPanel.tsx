@@ -18,6 +18,7 @@ interface IQuickLinksPropertyPanelState {
   links: IQuickLinkItem[];
   editingIndex: number;
   newLink: IQuickLinkItem;
+  urlError?: string;
 }
 
 export default class QuickLinksPropertyPanel extends React.Component<IQuickLinksPropertyPanelProps, IQuickLinksPropertyPanelState> {
@@ -26,7 +27,8 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
     this.state = {
       links: props.links || [],
       editingIndex: -1,
-      newLink: this.getEmptyLink()
+      newLink: this.getEmptyLink(),
+      urlError: undefined
     };
   }
 
@@ -44,13 +46,66 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
     return iconType === 'custom' ? '' : 'Link';
   }
 
+  private validateUrl(url: string): string | undefined {
+    // Validate URL to match runtime component validation
+    // Allow http, https, relative URLs, but reject dangerous schemes
+    if (!url?.trim()) {
+      return undefined; // Empty URL will be caught by required field validation
+    }
+    
+    const trimmedUrl = url.trim();
+    const lowerUrl = trimmedUrl.toLowerCase();
+    
+    // Explicitly block dangerous schemes (XSS prevention)
+    // eslint-disable-next-line no-script-url
+    if (lowerUrl.startsWith('javascript:') || lowerUrl.startsWith('data:')) {
+      return 'URLs using javascript: or data: schemes are not allowed';
+    }
+    
+    // Allow http(s) URLs
+    if (lowerUrl.startsWith('http://') || lowerUrl.startsWith('https://')) {
+      return undefined;
+    }
+    
+    // Allow relative URLs (to match runtime component behavior)
+    // Root/path-relative: /path
+    // Dot-relative: ./path, ../path
+    // Fragment-only: #anchor
+    // Query-only: ?query
+    if (
+      trimmedUrl.startsWith('/') ||
+      trimmedUrl.startsWith('./') ||
+      trimmedUrl.startsWith('../') ||
+      trimmedUrl.startsWith('#') ||
+      trimmedUrl.startsWith('?')
+    ) {
+      return undefined;
+    }
+    
+    // All other formats are invalid
+    return 'URL must start with http://, https://, or be a relative URL (/, ./, ../, #, ?)';
+  }
+
   private handleAddLink = (): void => {
     const { newLink, links } = this.state;
-    if (newLink.title && newLink.url) {
-      const updatedLinks = [...links, newLink];
+    
+    // Trim and validate URL before adding
+    const trimmedUrl = newLink.url.trim();
+    const urlError = this.validateUrl(trimmedUrl);
+    
+    if (urlError) {
+      this.setState({ urlError });
+      return;
+    }
+    
+    if (newLink.title && trimmedUrl) {
+      // Store the link with trimmed URL
+      const linkToAdd = { ...newLink, url: trimmedUrl };
+      const updatedLinks = [...links, linkToAdd];
       this.setState({
         links: updatedLinks,
-        newLink: this.getEmptyLink()
+        newLink: this.getEmptyLink(),
+        urlError: undefined
       });
       this.props.onLinksChanged(updatedLinks);
     }
@@ -58,13 +113,26 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
 
   private handleUpdateLink = (): void => {
     const { newLink, links, editingIndex } = this.state;
-    if (newLink.title && newLink.url && editingIndex >= 0) {
+    
+    // Trim and validate URL before updating
+    const trimmedUrl = newLink.url.trim();
+    const urlError = this.validateUrl(trimmedUrl);
+    
+    if (urlError) {
+      this.setState({ urlError });
+      return;
+    }
+    
+    if (newLink.title && trimmedUrl && editingIndex >= 0) {
+      // Store the link with trimmed URL
+      const linkToUpdate = { ...newLink, url: trimmedUrl };
       const updatedLinks = [...links];
-      updatedLinks[editingIndex] = newLink;
+      updatedLinks[editingIndex] = linkToUpdate;
       this.setState({
         links: updatedLinks,
         editingIndex: -1,
-        newLink: this.getEmptyLink()
+        newLink: this.getEmptyLink(),
+        urlError: undefined
       });
       this.props.onLinksChanged(updatedLinks);
     }
@@ -79,20 +147,22 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
   private handleEditLink = (index: number): void => {
     this.setState((prevState) => ({
       editingIndex: index,
-      newLink: { ...prevState.links[index] }
+      newLink: { ...prevState.links[index] },
+      urlError: undefined // Clear any stale error when entering edit mode
     }));
   };
 
   private handleCancelEdit = (): void => {
     this.setState({
       editingIndex: -1,
-      newLink: this.getEmptyLink()
+      newLink: this.getEmptyLink(),
+      urlError: undefined
     });
   };
 
   public render(): React.ReactElement<IQuickLinksPropertyPanelProps> {
     const { label } = this.props;
-    const { links, newLink, editingIndex } = this.state;
+    const { links, newLink, editingIndex, urlError } = this.state;
 
     return (
       <div className={styles.quickLinksPropertyPanel}>
@@ -109,8 +179,16 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
           <TextField
             label="URL"
             value={newLink.url}
-            onChange={(_, value) => this.setState({ newLink: { ...newLink, url: value || '' } })}
+            onChange={(_, value) => {
+              const url = value ? value.trim() : '';
+              const error = this.validateUrl(url);
+              this.setState({ 
+                newLink: { ...newLink, url },
+                urlError: error
+              });
+            }}
             required
+            errorMessage={urlError}
           />
           <ChoiceGroup
             label="Icon Type"
@@ -144,11 +222,11 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
           <div className={styles.buttonGroup}>
             {editingIndex >= 0 ? (
               <>
-                <PrimaryButton text="Update" onClick={this.handleUpdateLink} disabled={!newLink.title || !newLink.url} />
+                <PrimaryButton text="Update" onClick={this.handleUpdateLink} disabled={!newLink.title || !newLink.url || !!urlError} />
                 <DefaultButton text="Cancel" onClick={this.handleCancelEdit} />
               </>
             ) : (
-              <PrimaryButton text="Add Link" onClick={this.handleAddLink} disabled={!newLink.title || !newLink.url} />
+              <PrimaryButton text="Add Link" onClick={this.handleAddLink} disabled={!newLink.title || !newLink.url || !!urlError} />
             )}
           </div>
         </div>
