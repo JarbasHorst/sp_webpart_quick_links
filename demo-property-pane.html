@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Links Property Pane Demo</title>
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+    <style>
+        body {
+            font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+            padding: 20px;
+            background-color: #faf9f8;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .demo-section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 20px;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        .panel {
+            background: #ffffff;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            padding: 20px;
+        }
+        .panel-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* Old Style */
+        .linkItem-old {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+        }
+        .linkInfo-old {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            gap: 12px;
+        }
+        .linkIcon-old {
+            font-size: 24px;
+            color: #0078d4;
+        }
+        .linkDetails-old {
+            flex: 1;
+        }
+        .linkTitle-old {
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 4px;
+        }
+        .linkUrl-old {
+            font-size: 12px;
+            color: #605e5c;
+            word-break: break-all;
+            margin-bottom: 2px;
+        }
+        .linkTarget-old {
+            font-size: 11px;
+            color: #8a8886;
+        }
+        .linkActions-old {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .button-old {
+            padding: 4px 16px;
+            font-size: 14px;
+            border: 1px solid #8a8886;
+            background: white;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .button-old:hover {
+            background: #f3f2f1;
+        }
+        
+        /* New Style */
+        .linkItem-new {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 16px;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            border: 1px solid #d2d0ce;
+            border-radius: 4px;
+            gap: 16px;
+        }
+        .linkInfo-new {
+            display: flex;
+            align-items: flex-start;
+            flex: 1;
+            gap: 16px;
+            min-width: 0;
+        }
+        .linkIcon-new {
+            font-size: 28px;
+            color: #0078d4;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .linkDetails-new {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .linkTitle-new {
+            font-weight: 600;
+            font-size: 14px;
+            color: #323130;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        .linkUrl-new {
+            font-size: 13px;
+            color: #605e5c;
+            word-break: break-all;
+            line-height: 1.4;
+        }
+        .linkTarget-new {
+            font-size: 12px;
+            color: #8a8886;
+            line-height: 1.4;
+        }
+        .linkActions-new {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+            align-items: flex-start;
+        }
+        .iconButton-new {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            min-width: 32px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+        }
+        .iconButton-new i {
+            font-size: 16px;
+            color: #323130;
+        }
+        .iconButton-new:hover {
+            background-color: #f3f2f1;
+        }
+        .iconButton-new:active {
+            background-color: #edebe9;
+        }
+        .ms-Icon {
+            display: inline-block;
+            font-family: FabricMDL2Icons;
+            font-style: normal;
+            font-weight: normal;
+        }
+        .ms-Icon--Edit:before { content: "\E70F"; }
+        .ms-Icon--Delete:before { content: "\E74D"; }
+        .ms-Icon--Link:before { content: "\E71B"; }
+        .ms-Icon--Home:before { content: "\E80F"; }
+        .ms-Icon--Globe:before { content: "\E774"; }
+        .ms-Icon--Mail:before { content: "\E715"; }
+        
+        .highlight {
+            background-color: #fff4ce;
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        
+        .improvement-list {
+            background: #f3f2f1;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .improvement-list h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #323130;
+            margin-bottom: 10px;
+        }
+        .improvement-list ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .improvement-list li {
+            margin-bottom: 8px;
+            color: #323130;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="demo-section">
+            <h1>Quick Links Property Pane - Before & After</h1>
+            <p style="color: #605e5c; margin-bottom: 0;">Improved UI design for better usability and visual clarity</p>
+        </div>
+
+        <div class="comparison">
+            <!-- Old Design -->
+            <div class="panel">
+                <div class="panel-title">❌ Before (Old Design)</div>
+                <div style="margin-top: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px;">Current Links</div>
+                    
+                    <div class="linkItem-old">
+                        <div class="linkInfo-old">
+                            <i class="ms-Icon ms-Icon--Home linkIcon-old"></i>
+                            <div class="linkDetails-old">
+                                <div class="linkTitle-old">Löwe</div>
+                                <div class="linkUrl-old">https://google.com</div>
+                                <div class="linkTarget-old">Opens in new tab</div>
+                            </div>
+                        </div>
+                        <div class="linkActions-old">
+                            <button class="button-old">Edit</button>
+                            <button class="button-old">Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="linkItem-old">
+                        <div class="linkInfo-old">
+                            <i class="ms-Icon ms-Icon--Globe linkIcon-old"></i>
+                            <div class="linkDetails-old">
+                                <div class="linkTitle-old">Wessen</div>
+                                <div class="linkUrl-old">https://www.google.com</div>
+                                <div class="linkTarget-old">Opens in new tab</div>
+                            </div>
+                        </div>
+                        <div class="linkActions-old">
+                            <button class="button-old">Edit</button>
+                            <button class="button-old">Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="linkItem-old">
+                        <div class="linkInfo-old">
+                            <i class="ms-Icon ms-Icon--Link linkIcon-old"></i>
+                            <div class="linkDetails-old">
+                                <div class="linkTitle-old">HR</div>
+                                <div class="linkUrl-old">www.google.com</div>
+                                <div class="linkTarget-old">Opens in new tab • Custom icon</div>
+                            </div>
+                        </div>
+                        <div class="linkActions-old">
+                            <button class="button-old">Edit</button>
+                            <button class="button-old">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Design -->
+            <div class="panel">
+                <div class="panel-title">✅ After (New Design)</div>
+                <div style="margin-top: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px;">Current Links</div>
+                    
+                    <div class="linkItem-new">
+                        <div class="linkInfo-new">
+                            <i class="ms-Icon ms-Icon--Home linkIcon-new"></i>
+                            <div class="linkDetails-new">
+                                <div class="linkTitle-new">Löwe</div>
+                                <div class="linkUrl-new">https://google.com</div>
+                                <div class="linkTarget-new">Opens in new tab</div>
+                            </div>
+                        </div>
+                        <div class="linkActions-new">
+                            <button class="iconButton-new" title="Edit" aria-label="Edit link">
+                                <i class="ms-Icon ms-Icon--Edit"></i>
+                            </button>
+                            <button class="iconButton-new" title="Delete" aria-label="Delete link">
+                                <i class="ms-Icon ms-Icon--Delete"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="linkItem-new">
+                        <div class="linkInfo-new">
+                            <i class="ms-Icon ms-Icon--Globe linkIcon-new"></i>
+                            <div class="linkDetails-new">
+                                <div class="linkTitle-new">Wessen</div>
+                                <div class="linkUrl-new">https://www.google.com</div>
+                                <div class="linkTarget-new">Opens in new tab</div>
+                            </div>
+                        </div>
+                        <div class="linkActions-new">
+                            <button class="iconButton-new" title="Edit" aria-label="Edit link">
+                                <i class="ms-Icon ms-Icon--Edit"></i>
+                            </button>
+                            <button class="iconButton-new" title="Delete" aria-label="Delete link">
+                                <i class="ms-Icon ms-Icon--Delete"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="linkItem-new">
+                        <div class="linkInfo-new">
+                            <i class="ms-Icon ms-Icon--Link linkIcon-new"></i>
+                            <div class="linkDetails-new">
+                                <div class="linkTitle-new">HR</div>
+                                <div class="linkUrl-new">www.google.com</div>
+                                <div class="linkTarget-new">Opens in new tab • Custom icon</div>
+                            </div>
+                        </div>
+                        <div class="linkActions-new">
+                            <button class="iconButton-new" title="Edit" aria-label="Edit link">
+                                <i class="ms-Icon ms-Icon--Edit"></i>
+                            </button>
+                            <button class="iconButton-new" title="Delete" aria-label="Delete link">
+                                <i class="ms-Icon ms-Icon--Delete"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section improvement-list">
+            <h3>✨ Key Improvements</h3>
+            <ul>
+                <li><strong>Icon Buttons:</strong> Replaced text buttons ("Edit", "Delete") with compact icon buttons using pen (✏️) and trash (🗑️) icons</li>
+                <li><strong>Smaller Action Buttons:</strong> Reduced button size from full text buttons to 32×32px icon buttons, saving horizontal space</li>
+                <li><strong>Better Spacing:</strong> Increased padding from 12px to 16px and gap from 12px to 16px for improved breathing room</li>
+                <li><strong>Larger Icons:</strong> Increased link icon size from 24px to 28px for better visual prominence</li>
+                <li><strong>Improved Typography:</strong> Increased font sizes (Title: 14px, URL: 13px, Target: 12px) for better readability</li>
+                <li><strong>Better Layout:</strong> Changed alignment from center to flex-start, allowing multi-line content to display naturally</li>
+                <li><strong>Enhanced Vertical Rhythm:</strong> Added 6px gap between text elements for clearer visual hierarchy</li>
+                <li><strong>Accessibility:</strong> Added proper aria-labels and title attributes to icon buttons</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
