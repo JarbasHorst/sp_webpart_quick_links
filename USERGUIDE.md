@@ -129,8 +129,10 @@ The property pane provides an intuitive interface for managing your quick links 
 1. In the property pane, scroll to the **Quick Links** section
 2. Fill in the form:
    - **Link Title**: Enter a descriptive name (e.g., "Company Intranet")
-   - **URL**: Enter the complete URL starting with http:// or https:// (e.g., "https://intranet.company.com")
-     - **Note**: URLs must begin with `http://` or `https://` to be added
+   - **URL**: Enter a complete URL or relative path
+     - **Absolute URLs**: `https://intranet.company.com`, `http://example.com`
+     - **Relative URLs**: `/sites/MySite`, `./page.aspx`, `../Documents`
+     - **Fragment/Query**: `#section`, `?param=value`
    - **Icon Name**: Enter a Fluent UI icon name (e.g., "Home", "Globe", "Document")
    - **Open in new tab**: Check if you want the link to open in a new browser tab
 3. Click **Add Link**
@@ -244,12 +246,11 @@ For a complete list of available icons:
 
 ### URL Best Practices
 
-1. **Use Full URLs**: Always include "https://" or "http://" at the beginning
-   - **Required**: URLs must start with `http://` or `https://` to be added to the web part
+1. **Use Full URLs**: Always include "https://" or "http://" at the beginning for external links
    - **Valid Examples**: `https://intranet.company.com`, `http://example.com`
-   - **Invalid Examples**: `www.google.com`, `intranet.company.com` (missing protocol)
+   - **Relative URLs**: Use relative paths for links within your SharePoint site (e.g., `/sites/MySite`, `./page.aspx`)
 2. **Test Links**: Verify all URLs work before publishing
-3. **Internal Links**: Use relative URLs for links within your SharePoint site
+3. **Internal Links**: Use relative URLs (starting with `/`) or full URLs with `https://` for links within your SharePoint site
 4. **External Links**: Always set "Open in new tab" for external websites
 
 ### Title Guidelines
@@ -265,9 +266,11 @@ For a complete list of available icons:
 **Problem**: Clicking a link does nothing or shows an error, or the Add Link button is disabled
 
 **Solutions:**
-- **URL Validation**: Ensure the URL starts with `http://` or `https://`
-  - Example: Change `www.google.com` to `https://www.google.com`
-- Verify the URL is complete (includes https://)
+- **URL Format**: Ensure the URL is valid:
+  - Absolute URLs must start with `http://` or `https://` (e.g., `https://www.google.com`)
+  - Relative URLs can start with `/`, `./`, `../`, `#`, or `?` (e.g., `/sites/MySite`)
+  - Dangerous schemes like `javascript:` or `data:` are not allowed
+- Verify the URL is complete
 - Check for typos in the URL
 - Test the URL in a browser first
 - Ensure you have permission to access the destination

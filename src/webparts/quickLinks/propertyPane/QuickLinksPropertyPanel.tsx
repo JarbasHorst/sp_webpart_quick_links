@@ -47,32 +47,61 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
   }
 
   private validateUrl(url: string): string | undefined {
-    // URL must start with http:// or https://
-    if (!url) {
-      return undefined; // Empty URL will be caught by required validation
+    // Validate URL to match runtime component validation
+    // Allow http, https, relative URLs, but reject dangerous schemes
+    if (!url || !url.trim()) {
+      return undefined; // Empty URL will be caught by required field validation
     }
     
     const trimmedUrl = url.trim();
     const lowerUrl = trimmedUrl.toLowerCase();
     
-    if (!lowerUrl.startsWith('http://') && !lowerUrl.startsWith('https://')) {
-      return 'URL must start with http:// or https://';
+    // Explicitly block dangerous schemes (XSS prevention)
+    // eslint-disable-next-line no-script-url
+    if (lowerUrl.startsWith('javascript:') || lowerUrl.startsWith('data:')) {
+      return 'URLs using javascript: or data: schemes are not allowed';
     }
     
-    return undefined;
+    // Allow http(s) URLs
+    if (lowerUrl.startsWith('http://') || lowerUrl.startsWith('https://')) {
+      return undefined;
+    }
+    
+    // Allow relative URLs (to match runtime component behavior)
+    // Root/path-relative: /path
+    // Dot-relative: ./path, ../path
+    // Fragment-only: #anchor
+    // Query-only: ?query
+    if (
+      trimmedUrl.startsWith('/') ||
+      trimmedUrl.startsWith('./') ||
+      trimmedUrl.startsWith('../') ||
+      trimmedUrl.startsWith('#') ||
+      trimmedUrl.startsWith('?')
+    ) {
+      return undefined;
+    }
+    
+    // All other formats are invalid
+    return 'URL must start with http://, https://, or be a relative URL (/, ./, ../, #, ?)';
   }
 
   private handleAddLink = (): void => {
     const { newLink, links } = this.state;
-    const urlError = this.validateUrl(newLink.url);
+    
+    // Trim and validate URL before adding
+    const trimmedUrl = newLink.url.trim();
+    const urlError = this.validateUrl(trimmedUrl);
     
     if (urlError) {
       this.setState({ urlError });
       return;
     }
     
-    if (newLink.title && newLink.url) {
-      const updatedLinks = [...links, newLink];
+    if (newLink.title && trimmedUrl) {
+      // Store the link with trimmed URL
+      const linkToAdd = { ...newLink, url: trimmedUrl };
+      const updatedLinks = [...links, linkToAdd];
       this.setState({
         links: updatedLinks,
         newLink: this.getEmptyLink(),
@@ -84,16 +113,21 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
 
   private handleUpdateLink = (): void => {
     const { newLink, links, editingIndex } = this.state;
-    const urlError = this.validateUrl(newLink.url);
+    
+    // Trim and validate URL before updating
+    const trimmedUrl = newLink.url.trim();
+    const urlError = this.validateUrl(trimmedUrl);
     
     if (urlError) {
       this.setState({ urlError });
       return;
     }
     
-    if (newLink.title && newLink.url && editingIndex >= 0) {
+    if (newLink.title && trimmedUrl && editingIndex >= 0) {
+      // Store the link with trimmed URL
+      const linkToUpdate = { ...newLink, url: trimmedUrl };
       const updatedLinks = [...links];
-      updatedLinks[editingIndex] = newLink;
+      updatedLinks[editingIndex] = linkToUpdate;
       this.setState({
         links: updatedLinks,
         editingIndex: -1,
@@ -113,7 +147,8 @@ export default class QuickLinksPropertyPanel extends React.Component<IQuickLinks
   private handleEditLink = (index: number): void => {
     this.setState((prevState) => ({
       editingIndex: index,
-      newLink: { ...prevState.links[index] }
+      newLink: { ...prevState.links[index] },
+      urlError: undefined // Clear any stale error when entering edit mode
     }));
   };
 
