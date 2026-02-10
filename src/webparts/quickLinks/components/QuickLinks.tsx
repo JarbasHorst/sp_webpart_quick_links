@@ -40,7 +40,8 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
           <>
             <img 
               src={link.icon} 
-              alt={link.title} 
+              alt="" 
+              role="presentation"
               className={styles.customIcon}
               onError={(e) => {
                 // Fallback to default icon if image fails to load
@@ -55,52 +56,63 @@ export default class QuickLinks extends React.Component<IQuickLinksProps> {
                 }
               }}
             />
-            <Icon iconName="Link" className={styles.icon} style={{ display: 'none' }} />
+            <Icon iconName="Link" className={styles.icon} style={{ display: 'none' }} aria-hidden="true" />
           </>
         );
       } else {
         // Invalid custom icon URL, fallback to default Link icon
-        return <Icon iconName="Link" className={styles.icon} />;
+        return <Icon iconName="Link" className={styles.icon} aria-hidden="true" />;
       }
     }
     
     // Default to Fluent UI icon
-    return <Icon iconName={link.icon || 'Link'} className={styles.icon} />;
+    return <Icon iconName={link.icon || 'Link'} className={styles.icon} aria-hidden="true" />;
   }
 
   public render(): React.ReactElement<IQuickLinksProps> {
     const { title, links } = this.props;
 
     return (
-      <section className={styles.quickLinks}>
+      <section className={styles.quickLinks} aria-label={title || 'Quick Links'}>
         {title && <h2 className={styles.title}>{title}</h2>}
-        <div className={styles.linksContainer}>
+        <div className={styles.linksContainer} role="list">
           {links && links.length > 0 ? (
             links.map((link, index) => {
               const isValid = this.isValidUrl(link.url);
               const safeUrl = isValid ? link.url : '#';
               
+              // Create accessible label for the link
+              // Include "opens in new tab" in aria-label to avoid duplication with aria-describedby
+              const ariaLabel = link.openInNewTab 
+                ? `${link.title} (opens in new tab)` 
+                : link.title;
+              
               return (
-                <a
-                  key={index}
-                  href={safeUrl}
-                  className={styles.linkCard}
-                  target={link.openInNewTab ? '_blank' : '_self'}
-                  rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                  {...(!isValid && { onClick: (e) => { e.preventDefault(); } })}
-                >
-                  <div className={styles.iconContainer}>
-                    {this.renderIcon(link)}
-                  </div>
-                  <div className={styles.linkText}>
-                    <span className={styles.linkTitle}>{link.title}</span>
-                  </div>
-                </a>
+                <div key={index} role="listitem">
+                  <a
+                    href={safeUrl}
+                    className={styles.linkCard}
+                    target={link.openInNewTab ? '_blank' : '_self'}
+                    rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                    aria-label={ariaLabel}
+                    {...(!isValid && { 
+                      onClick: (e) => { e.preventDefault(); },
+                      'aria-disabled': 'true'
+                    })}
+                  >
+                    <div className={styles.iconContainer} aria-hidden="true">
+                      {this.renderIcon(link)}
+                    </div>
+                    <div className={styles.linkText}>
+                      <span className={styles.linkTitle}>{link.title}</span>
+                    </div>
+                  </a>
+                </div>
               );
             })
           ) : (
-            <div className={styles.emptyState}>
-              <Icon iconName="Link" className={styles.emptyIcon} />
+            <div className={styles.emptyState} role="status" aria-live="polite">
+              <Icon iconName="Link" className={styles.emptyIcon} aria-hidden="true" />
               <p>No quick links configured. Please edit the web part to add links.</p>
             </div>
           )}

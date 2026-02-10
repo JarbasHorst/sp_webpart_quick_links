@@ -11,6 +11,7 @@ A modern SharePoint Framework (SPFx) web part that allows users to create and di
 - ✨ Modern, card-based UI design with smooth hover effects
 - 🔗 Add multiple quick links with custom titles and URLs
 - 🎨 Choose from Fluent UI icons for each link
+- 🖼️ Support for custom image icons via URL
 - 🎯 Configure links to open in the same tab or a new tab
 - 📝 Customizable web part title
 - 🌗 Theme-aware styling (supports light and dark themes)
@@ -20,6 +21,7 @@ A modern SharePoint Framework (SPFx) web part that allows users to create and di
   - **Mobile (≤ 480px)**: Extra compact layout for small screens
 - 🎯 No horizontal scrolling on any screen size
 - ⚙️ Easy-to-use property pane for managing links
+- ♿ **WCAG 2.2 AAA Accessible** - Full keyboard navigation, screen reader support, and high contrast mode
 
 ## Used SharePoint Framework Version
 
@@ -119,6 +121,18 @@ The Quick Links web part is fully responsive and optimized for all screen sizes:
 - **Mobile (≤ 480px)**: Cards use flexible `minmax(100px, 1fr)` with 36px icons and 10px gaps; cards expand to fill available width
 
 The layout uses CSS Grid with `auto-fit` and `minmax()` to ensure cards adapt smoothly to any screen width without horizontal scrolling.
+
+## Accessibility
+
+This web part meets **WCAG 2.2 Level AAA** accessibility standards. Key features include:
+
+- **Keyboard Navigation**: Full keyboard access to all features with visible focus indicators
+- **Screen Reader Support**: Comprehensive ARIA labels and semantic HTML structure
+- **High Contrast Mode**: Enhanced visibility in high contrast themes
+- **Reduced Motion**: Respects user preferences for reduced motion
+- **Color Contrast**: All text meets WCAG AAA contrast ratios (7:1 minimum)
+
+See [ACCESSIBILITY.md](./ACCESSIBILITY.md) for complete accessibility documentation, testing recommendations, and conformance details.
 
 ## Project Structure
 

@@ -274,7 +274,9 @@ describe('QuickLinks Component', () => {
     const img = container.querySelector('img');
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute('src', 'https://example.com/logo.png');
-    expect(img).toHaveAttribute('alt', 'Custom Link');
+    // Custom icons are decorative (aria-hidden on icon container), so alt should be empty
+    expect(img).toHaveAttribute('alt', '');
+    expect(img).toHaveAttribute('role', 'presentation');
   });
 
   it('should use fluent icon when iconType is not specified', () => {

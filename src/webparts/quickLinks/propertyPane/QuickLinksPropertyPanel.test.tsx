@@ -340,8 +340,8 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
 
     render(<QuickLinksPropertyPanel {...defaultProps} links={existingLinks} />);
     
-    // Click edit button
-    const editButton = screen.getByTitle('Edit');
+    // Click edit button using aria-label
+    const editButton = screen.getByLabelText('Edit link: Existing Link');
     fireEvent.click(editButton);
     
     // URL input should now have the existing URL
@@ -375,8 +375,8 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
     // Should have error
     expect(urlInput).toHaveAttribute('aria-invalid', 'true');
     
-    // Click edit button
-    const editButton = screen.getByTitle('Edit');
+    // Click edit button using aria-label
+    const editButton = screen.getByLabelText('Edit link: Existing Link');
     fireEvent.click(editButton);
     
     // Error should be cleared and URL field should have existing valid URL
@@ -397,8 +397,8 @@ describe('QuickLinksPropertyPanel URL Validation', () => {
 
     render(<QuickLinksPropertyPanel {...defaultProps} links={existingLinks} />);
     
-    // Click edit button
-    const editButton = screen.getByTitle('Edit');
+    // Click edit button using aria-label
+    const editButton = screen.getByLabelText('Edit link: Existing');
     fireEvent.click(editButton);
     
     // Change URL with spaces
