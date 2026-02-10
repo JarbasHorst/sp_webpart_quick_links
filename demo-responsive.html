@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Links Web Part - Responsive Demo</title>
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f2f1;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .demo-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .demo-notice {
+            background-color: #fff4ce;
+            border: 1px solid #ffb900;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        .demo-notice h2 {
+            margin: 0 0 12px 0;
+            color: #323130;
+        }
+        .demo-notice p {
+            margin: 0 0 8px 0;
+            color: #605e5c;
+        }
+        
+        .viewport-container {
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .viewport-header {
+            background-color: #0078d4;
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .viewport-content {
+            background: white;
+        }
+        
+        /* Desktop View */
+        .desktop-view .viewport-content {
+            width: 100%;
+        }
+        
+        /* Tablet View */
+        .tablet-view .viewport-content {
+            max-width: 768px;
+            margin: 0 auto;
+        }
+        
+        /* Mobile View */
+        .mobile-view .viewport-content {
+            max-width: 375px;
+            margin: 0 auto;
+        }
+        
+        /* Small Mobile View */
+        .small-mobile-view .viewport-content {
+            max-width: 320px;
+            margin: 0 auto;
+        }
+        
+        /* Quick Links Styles */
+        .quickLinks {
+            padding: 20px;
+        }
+        .title {
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            font-weight: 600;
+            color: #323130;
+        }
+        .linksContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 150px));
+            justify-content: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .linkCard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 8px;
+            background-color: #ffffff;
+            border: 1px solid #edebe9;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            min-height: 120px;
+            box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
+        }
+        .linkCard:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108);
+            border-color: #0078d4;
+        }
+        .linkCard:hover .icon {
+            color: #0078d4;
+            transform: scale(1.1);
+        }
+        .linkCard:active {
+            transform: translateY(0);
+        }
+        .iconContainer {
+            margin-bottom: 12px;
+            flex-shrink: 0;
+        }
+        .icon {
+            font-size: 48px;
+            color: #0078d4;
+            transition: all 0.2s ease-in-out;
+        }
+        .linkText {
+            text-align: center;
+            width: 100%;
+        }
+        .linkTitle {
+            font-size: 14px;
+            font-weight: 600;
+            color: #323130;
+            word-break: break-word;
+            line-height: 1.3;
+        }
+        
+        /* Responsive Styles - Apply to all viewports */
+        .tablet-view .quickLinks,
+        .mobile-view .quickLinks,
+        .small-mobile-view .quickLinks {
+            padding: 12px;
+        }
+        
+        .tablet-view .title,
+        .mobile-view .title,
+        .small-mobile-view .title {
+            font-size: 20px;
+            margin: 0 0 16px 0;
+        }
+        
+        .tablet-view .linksContainer,
+        .mobile-view .linksContainer,
+        .small-mobile-view .linksContainer {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .tablet-view .linkCard,
+        .mobile-view .linkCard,
+        .small-mobile-view .linkCard {
+            padding: 12px 6px;
+            min-height: 100px;
+        }
+        
+        .tablet-view .iconContainer,
+        .mobile-view .iconContainer,
+        .small-mobile-view .iconContainer {
+            margin-bottom: 8px;
+        }
+        
+        .tablet-view .icon,
+        .mobile-view .icon,
+        .small-mobile-view .icon {
+            font-size: 40px;
+        }
+        
+        .tablet-view .linkTitle,
+        .mobile-view .linkTitle,
+        .small-mobile-view .linkTitle {
+            font-size: 13px;
+        }
+        
+        /* Extra small mobile adjustments */
+        .small-mobile-view .linksContainer {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+        
+        .small-mobile-view .linkCard {
+            padding: 10px 4px;
+            min-height: 90px;
+        }
+        
+        .small-mobile-view .iconContainer {
+            margin-bottom: 6px;
+        }
+        
+        .small-mobile-view .icon {
+            font-size: 36px;
+        }
+        
+        .small-mobile-view .linkTitle {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-wrapper">
+        <div class="demo-notice">
+            <h2>📱 Quick Links Web Part - Responsive Design Demo</h2>
+            <p><strong>This demo shows how the Quick Links web part adapts to different screen sizes.</strong></p>
+            <p>The component uses CSS media queries and responsive grid layouts to ensure a great user experience on desktop, tablet, and mobile devices.</p>
+        </div>
+
+        <!-- Desktop View -->
+        <div class="viewport-container desktop-view">
+            <div class="viewport-header">
+                <span>🖥️ Desktop View (1200px+)</span>
+                <span>Full size layout</span>
+            </div>
+            <div class="viewport-content">
+                <div class="quickLinks">
+                    <h2 class="title">Quick Links</h2>
+                    <div class="linksContainer">
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🏠</div></div>
+                            <div class="linkText"><span class="linkTitle">Home</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🌐</div></div>
+                            <div class="linkText"><span class="linkTitle">Intranet</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">✉️</div></div>
+                            <div class="linkText"><span class="linkTitle">Email</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📄</div></div>
+                            <div class="linkText"><span class="linkTitle">Documents</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">👥</div></div>
+                            <div class="linkText"><span class="linkTitle">People Directory</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📅</div></div>
+                            <div class="linkText"><span class="linkTitle">Calendar</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tablet View -->
+        <div class="viewport-container tablet-view">
+            <div class="viewport-header">
+                <span>📱 Tablet View (768px)</span>
+                <span>Responsive grid with smaller gaps</span>
+            </div>
+            <div class="viewport-content">
+                <div class="quickLinks">
+                    <h2 class="title">Quick Links</h2>
+                    <div class="linksContainer">
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🏠</div></div>
+                            <div class="linkText"><span class="linkTitle">Home</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🌐</div></div>
+                            <div class="linkText"><span class="linkTitle">Intranet</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">✉️</div></div>
+                            <div class="linkText"><span class="linkTitle">Email</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📄</div></div>
+                            <div class="linkText"><span class="linkTitle">Documents</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">👥</div></div>
+                            <div class="linkText"><span class="linkTitle">People Directory</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📅</div></div>
+                            <div class="linkText"><span class="linkTitle">Calendar</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile View -->
+        <div class="viewport-container mobile-view">
+            <div class="viewport-header">
+                <span>📱 Mobile View (375px)</span>
+                <span>Compact cards with smaller icons</span>
+            </div>
+            <div class="viewport-content">
+                <div class="quickLinks">
+                    <h2 class="title">Quick Links</h2>
+                    <div class="linksContainer">
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🏠</div></div>
+                            <div class="linkText"><span class="linkTitle">Home</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🌐</div></div>
+                            <div class="linkText"><span class="linkTitle">Intranet</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">✉️</div></div>
+                            <div class="linkText"><span class="linkTitle">Email</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📄</div></div>
+                            <div class="linkText"><span class="linkTitle">Documents</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">👥</div></div>
+                            <div class="linkText"><span class="linkTitle">People Directory</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📅</div></div>
+                            <div class="linkText"><span class="linkTitle">Calendar</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Small Mobile View -->
+        <div class="viewport-container small-mobile-view">
+            <div class="viewport-header">
+                <span>📱 Small Mobile View (320px)</span>
+                <span>Extra compact for small screens</span>
+            </div>
+            <div class="viewport-content">
+                <div class="quickLinks">
+                    <h2 class="title">Quick Links</h2>
+                    <div class="linksContainer">
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🏠</div></div>
+                            <div class="linkText"><span class="linkTitle">Home</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">🌐</div></div>
+                            <div class="linkText"><span class="linkTitle">Intranet</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">✉️</div></div>
+                            <div class="linkText"><span class="linkTitle">Email</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📄</div></div>
+                            <div class="linkText"><span class="linkTitle">Documents</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">👥</div></div>
+                            <div class="linkText"><span class="linkTitle">People Directory</span></div>
+                        </a>
+                        <a href="#" class="linkCard">
+                            <div class="iconContainer"><div class="icon">📅</div></div>
+                            <div class="linkText"><span class="linkTitle">Calendar</span></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background-color: white; padding: 20px; border-radius: 4px; margin-top: 20px;">
+            <h3 style="margin-top: 0;">✨ Responsive Features:</h3>
+            <ul style="line-height: 1.8;">
+                <li><strong>Desktop (1200px+):</strong> Full-size cards (150px) with 48px icons and 14px text</li>
+                <li><strong>Tablet (768px):</strong> Slightly smaller cards with 40px icons, 13px text, and reduced gaps</li>
+                <li><strong>Mobile (375px):</strong> Compact cards that adapt to screen width with 40px icons</li>
+                <li><strong>Small Mobile (320px):</strong> Extra compact cards (100px min) with 36px icons and 12px text</li>
+                <li><strong>Responsive Grid:</strong> Uses CSS Grid with auto-fit and minmax() for flexible layouts</li>
+                <li><strong>No Horizontal Scroll:</strong> Cards adapt to available width on all screen sizes</li>
+                <li><strong>Touch-Friendly:</strong> Adequate tap targets and spacing for mobile interaction</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Prevent navigation in demo
+        document.querySelectorAll('.linkCard').forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -14,7 +14,12 @@ A modern SharePoint Framework (SPFx) web part that allows users to create and di
 - 🎯 Configure links to open in the same tab or a new tab
 - 📝 Customizable web part title
 - 🌗 Theme-aware styling (supports light and dark themes)
-- 📱 Responsive grid layout that adapts to different screen sizes
+- 📱 Fully responsive design for mobile and tablet devices
+  - **Desktop (1200px+)**: Full-size cards with optimal spacing
+  - **Tablet (768px)**: Adaptive cards with adjusted sizing
+  - **Mobile (< 768px)**: Compact layout optimized for touch interaction
+  - **Small Mobile (< 480px)**: Extra compact layout for small screens
+- 🎯 No horizontal scrolling on any screen size
 - ⚙️ Easy-to-use property pane for managing links
 
 ## Used SharePoint Framework Version
@@ -101,9 +106,21 @@ This web part illustrates the following concepts:
 - Building modern SPFx web parts with React and TypeScript
 - Creating custom property pane controls for rich configuration experiences
 - Using Fluent UI components and icons for consistent Microsoft 365 design
-- Implementing responsive grid layouts with CSS Grid
+- Implementing responsive grid layouts with CSS Grid and media queries
+- Supporting multiple device types (desktop, tablet, mobile)
 - Theme-aware styling with CSS custom properties
 - Type-safe development with TypeScript interfaces
+
+### Responsive Design
+
+The Quick Links web part is fully responsive and optimized for all screen sizes:
+
+- **Desktop (1200px+)**: Cards at 150px width with 48px icons, 16px gaps
+- **Tablet (768px)**: Cards at 120-150px width with 40px icons, 12px gaps
+- **Mobile (< 768px)**: Flexible card width with 40px icons, optimized padding
+- **Small Mobile (< 480px)**: Cards at 100px minimum width with 36px icons, 10px gaps
+
+The layout uses CSS Grid with `auto-fit` and `minmax()` to ensure cards adapt smoothly to any screen width without horizontal scrolling.
 
 ## Project Structure
 
