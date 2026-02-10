@@ -40,10 +40,9 @@ Each link card includes:
 
 The Quick Links web part automatically adapts to different screen sizes:
 
-- **Desktop (1200px+)**: Cards displayed at 150px width with 48px icons and 16px spacing
-- **Tablet (768px)**: Cards at 120-150px width with 40px icons and 12px spacing
-- **Mobile (< 768px)**: Flexible card width with 40px icons, optimized touch targets
-- **Small Mobile (< 480px)**: Cards at 100px minimum width with 36px icons and 10px spacing
+- **Desktop (> 768px)**: Cards use CSS Grid `minmax(140px, 150px)` with 48px icons and 16px spacing; typical card width is 140-150px
+- **Tablet (481px–768px)**: Cards use flexible `minmax(120px, 1fr)` with 40px icons and 12px spacing; cards adapt to available width
+- **Mobile (≤ 480px)**: Cards use flexible `minmax(100px, 1fr)` with 36px icons and 10px spacing; cards expand to fill width
 
 The responsive grid ensures:
 - No horizontal scrolling on any device

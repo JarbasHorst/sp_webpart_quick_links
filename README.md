@@ -15,10 +15,9 @@ A modern SharePoint Framework (SPFx) web part that allows users to create and di
 - 📝 Customizable web part title
 - 🌗 Theme-aware styling (supports light and dark themes)
 - 📱 Fully responsive design for mobile and tablet devices
-  - **Desktop (1200px+)**: Full-size cards with optimal spacing
-  - **Tablet (768px)**: Adaptive cards with adjusted sizing
-  - **Mobile (< 768px)**: Compact layout optimized for touch interaction
-  - **Small Mobile (< 480px)**: Extra compact layout for small screens
+  - **Desktop (> 768px)**: Full-size cards with optimal spacing
+  - **Tablet (481px–768px)**: Adaptive cards with adjusted sizing
+  - **Mobile (≤ 480px)**: Extra compact layout for small screens
 - 🎯 No horizontal scrolling on any screen size
 - ⚙️ Easy-to-use property pane for managing links
 
@@ -115,10 +114,9 @@ This web part illustrates the following concepts:
 
 The Quick Links web part is fully responsive and optimized for all screen sizes:
 
-- **Desktop (1200px+)**: Cards at 150px width with 48px icons, 16px gaps
-- **Tablet (768px)**: Cards at 120-150px width with 40px icons, 12px gaps
-- **Mobile (< 768px)**: Flexible card width with 40px icons, optimized padding
-- **Small Mobile (< 480px)**: Cards at 100px minimum width with 36px icons, 10px gaps
+- **Desktop (> 768px)**: Cards use CSS Grid `minmax(140px, 150px)` with 48px icons and 16px gaps; cards typically 140-150px wide but can grow larger on wide screens
+- **Tablet (481px–768px)**: Cards use flexible `minmax(120px, 1fr)` with 40px icons and 12px gaps; actual card width adapts to available space
+- **Mobile (≤ 480px)**: Cards use flexible `minmax(100px, 1fr)` with 36px icons and 10px gaps; cards expand to fill available width
 
 The layout uses CSS Grid with `auto-fit` and `minmax()` to ensure cards adapt smoothly to any screen width without horizontal scrolling.
 

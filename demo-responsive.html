@@ -230,7 +230,7 @@
         <!-- Desktop View -->
         <div class="viewport-container desktop-view">
             <div class="viewport-header">
-                <span>🖥️ Desktop View (1200px+)</span>
+                <span>🖥️ Desktop View (>768px)</span>
                 <span>Full size layout</span>
             </div>
             <div class="viewport-content">
@@ -386,10 +386,9 @@
         <div style="background-color: white; padding: 20px; border-radius: 4px; margin-top: 20px;">
             <h3 style="margin-top: 0;">✨ Responsive Features:</h3>
             <ul style="line-height: 1.8;">
-                <li><strong>Desktop (1200px+):</strong> Full-size cards (150px) with 48px icons and 14px text</li>
-                <li><strong>Tablet (768px):</strong> Slightly smaller cards with 40px icons, 13px text, and reduced gaps</li>
-                <li><strong>Mobile (375px):</strong> Compact cards that adapt to screen width with 40px icons</li>
-                <li><strong>Small Mobile (320px):</strong> Extra compact cards (100px min) with 36px icons and 12px text</li>
+                <li><strong>Desktop (>768px):</strong> Cards use CSS Grid minmax(140px, 150px) with 48px icons and 14px text; cards can grow beyond 150px on wide screens</li>
+                <li><strong>Tablet (481px–768px):</strong> Cards use flexible minmax(120px, 1fr) with 40px icons, 13px text, and reduced gaps; actual width adapts to space</li>
+                <li><strong>Mobile (≤480px):</strong> Cards use flexible minmax(100px, 1fr) with 36px icons and 12px text; cards expand to fill available width</li>
                 <li><strong>Responsive Grid:</strong> Uses CSS Grid with auto-fit and minmax() for flexible layouts</li>
                 <li><strong>No Horizontal Scroll:</strong> Cards adapt to available width on all screen sizes</li>
                 <li><strong>Touch-Friendly:</strong> Adequate tap targets and spacing for mobile interaction</li>
